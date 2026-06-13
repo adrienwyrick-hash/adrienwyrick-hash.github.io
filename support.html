@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — WS Drift</title>
+<style>
+  * { box-sizing: border-box; }
+  body { background: radial-gradient(ellipse at top, #14242a 0%, #0c1518 60%); color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; min-height: 100vh; }
+  .container { max-width: 760px; margin: 0 auto; padding: 60px 24px; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: #00f2ff; text-decoration: none; font-size: 14px; margin-bottom: 32px; }
+  .back:hover { text-decoration: underline; }
+  h1 { font-size: 48px; letter-spacing: -1px; margin: 0 0 8px; background: linear-gradient(90deg, #00f2ff 0%, #ffffff 50%, #00f2ff 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s ease-in-out infinite; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .subtitle { color: #9bdadf; font-size: 16px; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 40px; }
+  h2 { font-size: 22px; color: #ffb84d; margin: 0 0 12px; }
+  h3 { font-size: 17px; color: #00f2ff; margin: 24px 0 8px; }
+  p { line-height: 1.65; color: #c9d5d7; margin: 0 0 12px; }
+  a { color: #00f2ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .card { background: rgba(12,21,24,0.78); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 28px; margin: 18px 0; }
+  .contact { background: linear-gradient(135deg, rgba(0,242,255,0.10), rgba(255,62,224,0.06)); border-color: rgba(0,242,255,0.2); text-align: center; }
+  .contact .email { display: inline-block; font-size: 22px; color: #00f2ff; font-weight: 600; margin-top: 8px; }
+  .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #6e8085; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← Back to WS Drift</a>
+    <h1>Support</h1>
+    <p class="subtitle">Help &amp; Frequently Asked Questions</p>
+
+    <div class="card contact">
+      <h2>📬 Contact us</h2>
+      <p>For any questions, bug reports, refund help, or feedback:</p>
+      <a href="mailto:Info@wyrickstudios.com" class="email">Info@wyrickstudios.com</a>
+      <p style="margin-top: 12px; font-size: 14px; opacity: 0.85;">We reply within 2 business days.</p>
+    </div>
+
+    <div class="card">
+      <h2>🔒 Account &amp; Data</h2>
+      <h3>How do I delete my account?</h3>
+      <p>Open WS Drift → <strong>Main Menu</strong> → <strong>Options</strong> → <strong>Privacy</strong> section → tap <strong>DELETE ACCOUNT</strong>. A single tap permanently removes your sign-in identity, best score, daily streak, achievement progress, and all preferences stored on the device. This action is immediate and cannot be undone.</p>
+
+      <h3>What data does WS Drift store?</h3>
+      <p>Only what's needed to play: your best score, settings, achievement progress, and optionally your Sign in with Apple identifier. No data is sent to our servers — WS Drift doesn't have a server. Game Center scores are managed by Apple.</p>
+    </div>
+
+    <div class="card">
+      <h2>💎 Purchases</h2>
+      <h3>How do I restore my purchases?</h3>
+      <p>Open WS Drift → <strong>Hangar (Ship Select)</strong> → tap the <strong>Restore</strong> button at the bottom. Sign into the same Apple ID you used for the original purchase.</p>
+
+      <h3>I bought Remove Ads but I still see ads</h3>
+      <p>1. Confirm the purchase in <strong>Settings → [Your Name] → Media &amp; Purchases → Purchase History</strong>.<br>2. In WS Drift, open the Hangar and tap <strong>Restore</strong>.<br>3. Force quit and relaunch the app.<br>4. If ads still appear, email us with your Apple ID purchase receipt.</p>
+
+      <h3>How do I request a refund?</h3>
+      <p>Refunds for App Store purchases are handled by Apple. Request one at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</p>
+    </div>
+
+    <div class="card">
+      <h2>🎮 Gameplay</h2>
+      <h3>How do controls work?</h3>
+      <p>Drag your thumb anywhere on the screen to drift your fighter. Your bolts fire on their own — focus on positioning and dodging.</p>
+
+      <h3>What happens if I miss a wave?</h3>
+      <p>Each wave has a 15-second timeout. If you can't kill every ship, the wave still ends so your round can progress.</p>
+
+      <h3>Where do my scores save?</h3>
+      <p>Your personal best saves on the device. If you're signed into Game Center, your score also posts to the global leaderboard.</p>
+    </div>
+
+    <div class="card">
+      <h2>🍎 Apple Services</h2>
+      <h3>Sign in with Apple</h3>
+      <p>Sign in with Apple is optional. WS Drift uses it only to label your local profile — we don't store your data on a server. You can hide your real email by tapping "Hide My Email" during the Apple Sign In flow.</p>
+
+      <h3>Game Center</h3>
+      <p>Game Center is operated by Apple, not Wyrick Studios. Manage your Game Center profile in <strong>Settings → Game Center</strong> on your device.</p>
+    </div>
+
+    <div class="card">
+      <h2>📄 Legal</h2>
+      <p><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a> — what data we collect (spoiler: very little).</p>
+    </div>
+
+    <div class="footer">
+      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios.
+    </div>
+  </div>
+</body>
+</html>
