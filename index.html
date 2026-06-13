@@ -34,8 +34,13 @@
   .download .label small { font-size: 11px; font-weight: 400; letter-spacing: 0.2px; margin-bottom: 3px; opacity: 0.95; }
   .download .label strong { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
 
-  .support-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); color: #e8f5f7; padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(0,242,255,0.4); font-size: 14px; font-weight: 600; text-decoration: none; margin-bottom: 50px; transition: background 0.2s ease, transform 0.2s ease; }
-  .support-btn:hover { background: rgba(0,242,255,0.14); transform: translateY(-2px); text-decoration: none; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); color: #e8f5f7; padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; margin: 4px 4px 0; }
+  .pill:hover { transform: translateY(-2px); text-decoration: none; }
+  .support-btn { border: 1px solid rgba(0,242,255,0.4); }
+  .support-btn:hover { background: rgba(0,242,255,0.14); }
+  .privacy-btn { border: 1px solid rgba(255,184,77,0.4); }
+  .privacy-btn:hover { background: rgba(255,184,77,0.14); }
+  .pill-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 50px; }
 
   .feedback-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #00f2ff, #ff3ee0); color: #0c1518; padding: 14px 32px; border-radius: 999px; border: none; font-family: inherit; font-size: 16px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; box-shadow: 0 8px 30px rgba(0,242,255,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; }
   .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,242,255,0.5); }
@@ -103,12 +108,16 @@
       </span>
     </a>
 
-    <br>
-
-    <a href="/support.html" class="support-btn">
-      <span style="font-size: 18px;">🛟</span>
-      <span>Need help? Visit Support</span>
-    </a>
+    <div class="pill-row">
+      <a href="/support.html" class="pill support-btn">
+        <span style="font-size: 18px;">🛟</span>
+        <span>Need help? Visit Support</span>
+      </a>
+      <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md" class="pill privacy-btn">
+        <span style="font-size: 18px;">🔒</span>
+        <span>Privacy Policy</span>
+      </a>
+    </div>
 
     <p class="intro">Step into the cockpit of a neon-trail starfighter and lock in for an arcade shooter built for one-handed thumb skill. <strong>WS Drift</strong> takes the classic Galaga-style squadron rush, throws in a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers of power. Every round is a chain of procedurally generated formations — no two waves are ever quite the same.</p>
 
