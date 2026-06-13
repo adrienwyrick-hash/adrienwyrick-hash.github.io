@@ -27,10 +27,25 @@
   .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 24px; letter-spacing: 1.5px; text-transform: uppercase; }
   .tagline { font-size: 22px; color: #ffb84d; font-weight: 600; margin: 0 0 32px; font-style: italic; }
 
-  .download { display: inline-flex; align-items: center; gap: 10px; background: #000; color: #fff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; box-shadow: 0 8px 30px rgba(0,242,255,0.25), 0 0 0 1px rgba(0,242,255,0.4); transition: transform 0.2s ease, box-shadow 0.2s ease; margin-bottom: 50px; }
-  .download:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,242,255,0.4), 0 0 0 1px rgba(0,242,255,0.65); }
-  .download .apple { font-size: 22px; line-height: 1; }
-  .download small { font-size: 11px; font-weight: 400; opacity: 0.7; letter-spacing: 1px; }
+  /* Apple-style App Store badge */
+  .download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #000; color: #fff;
+    padding: 10px 22px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.65);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    text-decoration: none;
+    transition: transform 0.18s ease, background 0.18s ease;
+    margin-bottom: 50px;
+    min-width: 200px;
+    justify-content: center;
+  }
+  .download:hover { transform: translateY(-2px); background: #111; text-decoration: none; }
+  .download svg { width: 30px; height: 30px; flex-shrink: 0; }
+  .download .label { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+  .download .label small { font-size: 11px; font-weight: 400; letter-spacing: 0.2px; margin-bottom: 3px; opacity: 0.95; }
+  .download .label strong { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
 
   h2 { font-size: 24px; color: #ffb84d; margin: 0 0 16px; }
   h3 { font-size: 18px; color: #00f2ff; margin: 18px 0 6px; }
@@ -49,7 +64,7 @@
   .mode-title .ic { font-size: 22px; }
   .mode p { margin: 0; color: #c9d5d7; line-height: 1.55; font-size: 15px; }
 
-  .tier-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .tier-row { display: grid; grid-template-columns: 140px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .tier-row:last-child { border: none; }
   .tier-name { color: #00f2ff; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
   .tier-desc { color: #c9d5d7; font-size: 14px; line-height: 1.5; }
@@ -86,11 +101,13 @@
     <p class="tagline">"Drift. Aim. Survive."</p>
 
     <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
-      <span class="apple"></span>
-      <span>
-        <small>Download on the</small><br>
-        App Store
-      </span>
+      <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+      </svg>
+      <div class="label">
+        <small>Download on the</small>
+        <strong>App Store</strong>
+      </div>
     </a>
 
     <p class="intro">Step into the cockpit of a neon-trail starfighter and lock in for an arcade shooter built for one-handed thumb skill. <strong>WS Drift</strong> takes the classic Galaga-style squadron rush, throws in a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers of power. Every round is a chain of procedurally generated formations — no two waves are ever quite the same.</p>
@@ -169,8 +186,13 @@
       <p class="intro" style="margin-bottom: 20px;">WS Drift is free on the App Store. Download it now, fly the free Standard fighter, and see if you can crack round 5.</p>
       <p style="text-align: center;">
         <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download" style="margin-bottom: 0;">
-          <span class="apple"></span>
-          <span><small>Download on the</small><br>App Store</span>
+          <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          <div class="label">
+            <small>Download on the</small>
+            <strong>App Store</strong>
+          </div>
         </a>
       </p>
     </div>
