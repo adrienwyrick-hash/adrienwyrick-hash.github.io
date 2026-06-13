@@ -5,8 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WS Drift — Wyrick Studios</title>
 <style>
-  body { background: #0c1518; color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; }
-  .container { max-width: 720px; margin: 0 auto; padding: 60px 24px; text-align: center; }
+  * { box-sizing: border-box; }
+  body { background: #0c1518; color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; position: relative; min-height: 100vh; }
+
+  /* Falling enemy background */
+  .field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+  .ship { position: absolute; top: -60px; width: 28px; height: 32px; clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%); opacity: 0.55; animation: fall linear infinite; filter: drop-shadow(0 0 8px currentColor); }
+  .bee { color: #ffd400; background: linear-gradient(180deg, #fff, #ffd400 50%, rgba(255,212,0,0.4)); }
+  .butterfly { color: #ff3ee0; background: linear-gradient(180deg, #fff, #ff3ee0 50%, rgba(255,62,224,0.4)); }
+  .boss { color: #00f2ff; background: linear-gradient(180deg, #fff, #00f2ff 50%, rgba(0,242,255,0.4)); width: 38px; height: 44px; }
+
+  @keyframes fall {
+    0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+    100% { transform: translateY(120vh) translateX(40px) rotate(15deg); }
+  }
+
+  /* Content */
+  .container { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 60px 24px; text-align: center; }
   .icon { width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06); margin-bottom: 24px; }
   h1 { font-size: 56px; letter-spacing: -1px; margin: 0 0 8px; color: #00f2ff; text-shadow: 0 0 30px rgba(0,242,255,0.4); }
   .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 40px; letter-spacing: 1px; text-transform: uppercase; }
@@ -14,13 +29,29 @@
   .intro { line-height: 1.6; color: #c9d5d7; text-align: left; }
   a { color: #00f2ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px; margin: 16px 0; text-align: left; }
+  .card { background: rgba(12,21,24,0.78); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px; margin: 16px 0; text-align: left; }
   ul { list-style: none; padding: 0; margin: 0; }
   li { padding: 6px 0; color: #c9d5d7; line-height: 1.5; }
   .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #6e8085; }
 </style>
 </head>
 <body>
+  <!-- Falling enemy field — 12 ships at varied speeds/positions -->
+  <div class="field">
+    <div class="ship bee"       style="left: 6%;  animation-duration: 7s;   animation-delay: 0s;"></div>
+    <div class="ship butterfly" style="left: 17%; animation-duration: 9s;   animation-delay: 1.2s;"></div>
+    <div class="ship bee"       style="left: 29%; animation-duration: 6s;   animation-delay: 2.5s;"></div>
+    <div class="ship boss"      style="left: 41%; animation-duration: 11s;  animation-delay: 0.8s;"></div>
+    <div class="ship butterfly" style="left: 53%; animation-duration: 8s;   animation-delay: 3.1s;"></div>
+    <div class="ship bee"       style="left: 64%; animation-duration: 7.5s; animation-delay: 1.8s;"></div>
+    <div class="ship boss"      style="left: 75%; animation-duration: 10s;  animation-delay: 4s;"></div>
+    <div class="ship butterfly" style="left: 86%; animation-duration: 9s;   animation-delay: 0.4s;"></div>
+    <div class="ship bee"       style="left: 12%; animation-duration: 8s;   animation-delay: 5.5s;"></div>
+    <div class="ship boss"      style="left: 48%; animation-duration: 12s;  animation-delay: 6.2s;"></div>
+    <div class="ship butterfly" style="left: 71%; animation-duration: 7s;   animation-delay: 4.7s;"></div>
+    <div class="ship bee"       style="left: 92%; animation-duration: 8.5s; animation-delay: 2.3s;"></div>
+  </div>
+
   <div class="container">
     <img src="MenuHero.png" alt="WS Drift app icon" class="icon">
     <h1>WS Drift</h1>
