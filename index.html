@@ -6,37 +6,115 @@
 <title>WS Drift — Wyrick Studios</title>
 <style>
   * { box-sizing: border-box; }
-  body { background: #0c1518; color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; position: relative; min-height: 100vh; }
+  body {
+    background: radial-gradient(ellipse at top, #14242a 0%, #0c1518 60%);
+    color: #e8f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+    position: relative; min-height: 100vh;
+  }
 
-  /* Falling enemy background */
-  .field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-  .ship { position: absolute; top: -60px; width: 28px; height: 32px; clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%); opacity: 0.55; animation: fall linear infinite; filter: drop-shadow(0 0 8px currentColor); }
-  .bee { color: #ffd400; background: linear-gradient(180deg, #fff, #ffd400 50%, rgba(255,212,0,0.4)); }
+  /* --- Starfield -------------------------------------------------- */
+  .stars, .stars::after {
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.85), transparent),
+      radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.65), transparent),
+      radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.75), transparent),
+      radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.85), transparent),
+      radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.6), transparent);
+    background-size: 100% 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .stars::after { content: ''; animation: twinkle 4s ease-in-out infinite alternate; opacity: 0.5; }
+  @keyframes twinkle {
+    from { opacity: 0.35; }
+    to   { opacity: 0.85; }
+  }
+
+  /* --- Falling fleet --------------------------------------------- */
+  .field { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .ship {
+    position: absolute; top: -60px; width: 28px; height: 32px;
+    clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%);
+    opacity: 0.55;
+    animation: fall linear infinite;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  .bee       { color: #ffd400; background: linear-gradient(180deg, #fff, #ffd400 50%, rgba(255,212,0,0.4)); }
   .butterfly { color: #ff3ee0; background: linear-gradient(180deg, #fff, #ff3ee0 50%, rgba(255,62,224,0.4)); }
-  .boss { color: #00f2ff; background: linear-gradient(180deg, #fff, #00f2ff 50%, rgba(0,242,255,0.4)); width: 38px; height: 44px; }
-
+  .boss      { color: #00f2ff; background: linear-gradient(180deg, #fff, #00f2ff 50%, rgba(0,242,255,0.4)); width: 38px; height: 44px; }
   @keyframes fall {
     0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
     100% { transform: translateY(120vh) translateX(40px) rotate(15deg); }
   }
 
-  /* Content */
-  .container { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 60px 24px; text-align: center; }
-  .icon { width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06); margin-bottom: 24px; }
-  h1 { font-size: 56px; letter-spacing: -1px; margin: 0 0 8px; color: #00f2ff; text-shadow: 0 0 30px rgba(0,242,255,0.4); }
-  .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 40px; letter-spacing: 1px; text-transform: uppercase; }
+  /* --- Content --------------------------------------------------- */
+  .container { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; padding: 60px 24px; text-align: center; }
+  .icon {
+    width: 140px; height: 140px; border-radius: 32px;
+    box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06);
+    margin-bottom: 24px;
+  }
+
+  /* Animated title — moving cyan/white/cyan gradient sweep */
+  h1 {
+    font-size: 64px; letter-spacing: -1.5px; margin: 0 0 8px;
+    background: linear-gradient(90deg, #00f2ff 0%, #ffffff 50%, #00f2ff 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(0,242,255,0.4);
+  }
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 32px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* Download button — pill, App Store dark style */
+  .download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #000; color: #fff;
+    padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(0,242,255,0.25), 0 0 0 1px rgba(0,242,255,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 50px;
+  }
+  .download:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,242,255,0.4), 0 0 0 1px rgba(0,242,255,0.65); }
+  .download .apple { font-size: 22px; line-height: 1; }
+  .download small { font-size: 11px; font-weight: 400; opacity: 0.7; letter-spacing: 1px; }
+
   h2 { font-size: 22px; color: #ffb84d; margin: 40px 0 12px; }
   .intro { line-height: 1.6; color: #c9d5d7; text-align: left; }
   a { color: #00f2ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .card { background: rgba(12,21,24,0.78); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px; margin: 16px 0; text-align: left; }
+
+  .card {
+    background: rgba(12,21,24,0.78); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 24px; margin: 16px 0;
+    text-align: left;
+  }
   ul { list-style: none; padding: 0; margin: 0; }
-  li { padding: 6px 0; color: #c9d5d7; line-height: 1.5; }
+  li { padding: 8px 0; color: #c9d5d7; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; }
+  li .ic { font-size: 20px; line-height: 1.4; flex-shrink: 0; }
+
   .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #6e8085; }
 </style>
 </head>
 <body>
-  <!-- Falling enemy field — 12 ships at varied speeds/positions -->
+  <div class="stars"></div>
+
   <div class="field">
     <div class="ship bee"       style="left: 6%;  animation-duration: 7s;   animation-delay: 0s;"></div>
     <div class="ship butterfly" style="left: 17%; animation-duration: 9s;   animation-delay: 1.2s;"></div>
@@ -57,26 +135,34 @@
     <h1>WS Drift</h1>
     <p class="subtitle">A wave-based arcade shooter</p>
 
+    <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
+      <span class="apple"></span>
+      <span>
+        <small>Download on the</small><br>
+        App Store
+      </span>
+    </a>
+
     <p class="intro">Pilot your fighter through wave after wave of swooping enemy formations. Drift, aim, survive. WS Drift is a retro-charged arcade shooter with modern controls and 17 unlockable ships, built for iPhone and iPad by Wyrick Studios.</p>
 
     <div class="card">
       <h2>Features</h2>
       <ul>
-        <li>• Wave-based combat with procedurally generated formations</li>
-        <li>• 17 unlockable fighters across 5 tiers</li>
-        <li>• Classic, Time Attack, and Boss Rush modes</li>
-        <li>• Game Center leaderboard + 112 achievements</li>
-        <li>• Daily play streak with reminder notifications</li>
-        <li>• Free to play • Remove Ads available as a one-time purchase</li>
+        <li><span class="ic">🌊</span><span>Wave-based combat with procedurally generated formations</span></li>
+        <li><span class="ic">🚀</span><span>17 unlockable fighters across 5 tiers</span></li>
+        <li><span class="ic">🎯</span><span>Classic, Time Attack, and Boss Rush modes</span></li>
+        <li><span class="ic">🏆</span><span>Game Center leaderboard + 112 achievements</span></li>
+        <li><span class="ic">🔥</span><span>Daily play streak with reminder notifications</span></li>
+        <li><span class="ic">💎</span><span>Free to play — Remove Ads available as a one-time purchase</span></li>
       </ul>
     </div>
 
     <div class="card">
       <h2>Links</h2>
       <ul>
-        <li>• <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></li>
-        <li>• <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/support.md">Support</a></li>
-        <li>• <a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></li>
+        <li><span class="ic">🔒</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></span></li>
+        <li><span class="ic">🛟</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/support.md">Support</a></span></li>
+        <li><span class="ic">✉️</span><span><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></span></li>
       </ul>
     </div>
 
