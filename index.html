@@ -27,7 +27,6 @@
   .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 24px; letter-spacing: 1.5px; text-transform: uppercase; }
   .tagline { font-size: 22px; color: #ffb84d; font-weight: 600; margin: 0 0 32px; font-style: italic; }
 
-  /* Apple-style App Store badge */
   .download {
     display: inline-flex; align-items: center; gap: 10px;
     background: #000; color: #fff;
@@ -37,7 +36,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     text-decoration: none;
     transition: transform 0.18s ease, background 0.18s ease;
-    margin-bottom: 50px;
+    margin-bottom: 14px;
     min-width: 200px;
     justify-content: center;
   }
@@ -46,6 +45,24 @@
   .download .label { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
   .download .label small { font-size: 11px; font-weight: 400; letter-spacing: 0.2px; margin-bottom: 3px; opacity: 0.95; }
   .download .label strong { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+
+  .support-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.06);
+    color: #e8f5f7;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,242,255,0.4);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 50px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .support-btn:hover {
+    background: rgba(0,242,255,0.14);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
 
   h2 { font-size: 24px; color: #ffb84d; margin: 0 0 16px; }
   h3 { font-size: 18px; color: #00f2ff; margin: 18px 0 6px; }
@@ -108,6 +125,13 @@
         <small>Download on the</small>
         <strong>App Store</strong>
       </div>
+    </a>
+
+    <br>
+
+    <a href="/support.html" class="support-btn">
+      <span style="font-size: 18px;">🛟</span>
+      <span>Need help? Visit Support</span>
     </a>
 
     <p class="intro">Step into the cockpit of a neon-trail starfighter and lock in for an arcade shooter built for one-handed thumb skill. <strong>WS Drift</strong> takes the classic Galaga-style squadron rush, throws in a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers of power. Every round is a chain of procedurally generated formations — no two waves are ever quite the same.</p>
@@ -200,8 +224,8 @@
     <div class="card">
       <h2>📬 Get in touch</h2>
       <ul>
+        <li><span class="ic">🛟</span><span><a href="/support.html">Support &amp; FAQ</a></span></li>
         <li><span class="ic">🔒</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></span></li>
-        <li><span class="ic">🛟</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/support.md">Support &amp; FAQ</a></span></li>
         <li><span class="ic">✉️</span><span><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></span></li>
       </ul>
     </div>
