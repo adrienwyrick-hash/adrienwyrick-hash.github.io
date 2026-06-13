@@ -6,108 +6,57 @@
 <title>WS Drift — Wyrick Studios</title>
 <style>
   * { box-sizing: border-box; }
-  body {
-    background: radial-gradient(ellipse at top, #14242a 0%, #0c1518 60%);
-    color: #e8f5f7;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    margin: 0; padding: 0;
-    overflow-x: hidden;
-    position: relative; min-height: 100vh;
-  }
+  body { background: radial-gradient(ellipse at top, #14242a 0%, #0c1518 60%); color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; position: relative; min-height: 100vh; }
 
-  /* --- Starfield -------------------------------------------------- */
-  .stars, .stars::after {
-    position: fixed; inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.85), transparent),
-      radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.7), transparent),
-      radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.9), transparent),
-      radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.6), transparent),
-      radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.65), transparent),
-      radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.75), transparent),
-      radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.7), transparent),
-      radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.85), transparent),
-      radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.5), transparent),
-      radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.6), transparent);
-    background-size: 100% 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
+  .stars, .stars::after { position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.85), transparent), radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.7), transparent), radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.6), transparent), radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.65), transparent), radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.75), transparent), radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.7), transparent), radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.85), transparent), radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.5), transparent), radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.6), transparent); background-size: 100% 100%; pointer-events: none; z-index: 0; }
   .stars::after { content: ''; animation: twinkle 4s ease-in-out infinite alternate; opacity: 0.5; }
-  @keyframes twinkle {
-    from { opacity: 0.35; }
-    to   { opacity: 0.85; }
-  }
+  @keyframes twinkle { from { opacity: 0.35; } to { opacity: 0.85; } }
 
-  /* --- Falling fleet --------------------------------------------- */
   .field { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-  .ship {
-    position: absolute; top: -60px; width: 28px; height: 32px;
-    clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%);
-    opacity: 0.55;
-    animation: fall linear infinite;
-    filter: drop-shadow(0 0 8px currentColor);
-  }
+  .ship { position: absolute; top: -60px; width: 28px; height: 32px; clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%); opacity: 0.55; animation: fall linear infinite; filter: drop-shadow(0 0 8px currentColor); }
   .bee       { color: #ffd400; background: linear-gradient(180deg, #fff, #ffd400 50%, rgba(255,212,0,0.4)); }
   .butterfly { color: #ff3ee0; background: linear-gradient(180deg, #fff, #ff3ee0 50%, rgba(255,62,224,0.4)); }
   .boss      { color: #00f2ff; background: linear-gradient(180deg, #fff, #00f2ff 50%, rgba(0,242,255,0.4)); width: 38px; height: 44px; }
-  @keyframes fall {
-    0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
-    100% { transform: translateY(120vh) translateX(40px) rotate(15deg); }
-  }
+  @keyframes fall { 0% { transform: translateY(-10vh) translateX(0) rotate(0deg); } 100% { transform: translateY(120vh) translateX(40px) rotate(15deg); } }
 
-  /* --- Content --------------------------------------------------- */
-  .container { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; padding: 60px 24px; text-align: center; }
-  .icon {
-    width: 140px; height: 140px; border-radius: 32px;
-    box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06);
-    margin-bottom: 24px;
-  }
+  .container { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; padding: 60px 24px; text-align: center; }
+  .icon { width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06); margin-bottom: 24px; }
 
-  /* Animated title — moving cyan/white/cyan gradient sweep */
-  h1 {
-    font-size: 64px; letter-spacing: -1.5px; margin: 0 0 8px;
-    background: linear-gradient(90deg, #00f2ff 0%, #ffffff 50%, #00f2ff 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 4s ease-in-out infinite;
-    text-shadow: 0 0 30px rgba(0,242,255,0.4);
-  }
-  @keyframes shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 32px; letter-spacing: 1.5px; text-transform: uppercase; }
+  h1 { font-size: 64px; letter-spacing: -1.5px; margin: 0 0 8px; background: linear-gradient(90deg, #00f2ff 0%, #ffffff 50%, #00f2ff 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s ease-in-out infinite; text-shadow: 0 0 30px rgba(0,242,255,0.4); }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 24px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .tagline { font-size: 22px; color: #ffb84d; font-weight: 600; margin: 0 0 32px; font-style: italic; }
 
-  /* Download button — pill, App Store dark style */
-  .download {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #000; color: #fff;
-    padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 16px;
-    text-decoration: none;
-    box-shadow: 0 8px 30px rgba(0,242,255,0.25), 0 0 0 1px rgba(0,242,255,0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 50px;
-  }
+  .download { display: inline-flex; align-items: center; gap: 10px; background: #000; color: #fff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; box-shadow: 0 8px 30px rgba(0,242,255,0.25), 0 0 0 1px rgba(0,242,255,0.4); transition: transform 0.2s ease, box-shadow 0.2s ease; margin-bottom: 50px; }
   .download:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,242,255,0.4), 0 0 0 1px rgba(0,242,255,0.65); }
   .download .apple { font-size: 22px; line-height: 1; }
   .download small { font-size: 11px; font-weight: 400; opacity: 0.7; letter-spacing: 1px; }
 
-  h2 { font-size: 22px; color: #ffb84d; margin: 40px 0 12px; }
-  .intro { line-height: 1.6; color: #c9d5d7; text-align: left; }
+  h2 { font-size: 24px; color: #ffb84d; margin: 0 0 16px; }
+  h3 { font-size: 18px; color: #00f2ff; margin: 18px 0 6px; }
+  .intro { line-height: 1.65; color: #c9d5d7; text-align: left; font-size: 17px; }
   a { color: #00f2ff; text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  .card {
-    background: rgba(12,21,24,0.78); backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px; padding: 24px; margin: 16px 0;
-    text-align: left;
-  }
+  .card { background: rgba(12,21,24,0.78); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 28px; margin: 18px 0; text-align: left; }
   ul { list-style: none; padding: 0; margin: 0; }
-  li { padding: 8px 0; color: #c9d5d7; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; }
+  li { padding: 8px 0; color: #c9d5d7; line-height: 1.55; display: flex; align-items: flex-start; gap: 12px; }
   li .ic { font-size: 20px; line-height: 1.4; flex-shrink: 0; }
+
+  .mode { padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .mode:last-child { border: none; padding-bottom: 0; }
+  .mode-title { display: flex; align-items: center; gap: 10px; font-weight: 700; color: #ffffff; font-size: 17px; margin-bottom: 6px; }
+  .mode-title .ic { font-size: 22px; }
+  .mode p { margin: 0; color: #c9d5d7; line-height: 1.55; font-size: 15px; }
+
+  .tier-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .tier-row:last-child { border: none; }
+  .tier-name { color: #00f2ff; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+  .tier-desc { color: #c9d5d7; font-size: 14px; line-height: 1.5; }
+  .tier-price { color: #ffb84d; font-weight: 600; }
+
+  .pitch { background: linear-gradient(135deg, rgba(0,242,255,0.08), rgba(255,62,224,0.06)); border-color: rgba(0,242,255,0.2); }
+  .pitch h2 { color: #00f2ff; }
 
   .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #6e8085; }
 </style>
@@ -134,6 +83,7 @@
     <img src="MenuHero.png" alt="WS Drift app icon" class="icon">
     <h1>WS Drift</h1>
     <p class="subtitle">A wave-based arcade shooter</p>
+    <p class="tagline">"Drift. Aim. Survive."</p>
 
     <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
       <span class="apple"></span>
@@ -143,31 +93,99 @@
       </span>
     </a>
 
-    <p class="intro">Pilot your fighter through wave after wave of swooping enemy formations. Drift, aim, survive. WS Drift is a retro-charged arcade shooter with modern controls and 17 unlockable ships, built for iPhone and iPad by Wyrick Studios.</p>
+    <p class="intro">Step into the cockpit of a neon-trail starfighter and lock in for an arcade shooter built for one-handed thumb skill. <strong>WS Drift</strong> takes the classic Galaga-style squadron rush, throws in a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers of power. Every round is a chain of procedurally generated formations — no two waves are ever quite the same.</p>
 
-    <div class="card">
-      <h2>Features</h2>
-      <ul>
-        <li><span class="ic">🌊</span><span>Wave-based combat with procedurally generated formations</span></li>
-        <li><span class="ic">🚀</span><span>17 unlockable fighters across 5 tiers</span></li>
-        <li><span class="ic">🎯</span><span>Classic, Time Attack, and Boss Rush modes</span></li>
-        <li><span class="ic">🏆</span><span>Game Center leaderboard + 112 achievements</span></li>
-        <li><span class="ic">🔥</span><span>Daily play streak with reminder notifications</span></li>
-        <li><span class="ic">💎</span><span>Free to play — Remove Ads available as a one-time purchase</span></li>
-      </ul>
+    <div class="card pitch">
+      <h2>Why WS Drift?</h2>
+      <p class="intro">Because most arcade shooters fall into one of two camps: too easy and forgettable, or too punishing for a quick session. <strong>WS Drift sits exactly in the middle.</strong> Pick it up for a 90-second run before bed. Lose yourself for an hour chasing your daily streak. Climb the Game Center leaderboard with friends. The skill ceiling is high, but the skill floor is just one drag of your thumb.</p>
+      <p class="intro" style="margin-top: 12px;">No grind. No energy bars. No pay-to-win. Just you, your fighter, and the next wave.</p>
     </div>
 
     <div class="card">
-      <h2>Links</h2>
+      <h2>🎮 How it plays</h2>
+      <p class="intro">Drag anywhere on the screen to drift your fighter — your thumb stays where it lands, the ship reacts to your motion. Bolts fire automatically from your nose-cone, straight up. Slide sideways to put each enemy in your lane. The ones you don't shoot down loop back around for another pass.</p>
+      <p class="intro" style="margin-top: 12px;">Each round is a series of waves — squadrons that swoop, dive, and shoot back. Clear them all and the round advances. The next round throws denser formations at you, with more bosses, sharper dives, and tighter timing.</p>
+    </div>
+
+    <div class="card">
+      <h2>🎯 Three modes for three moods</h2>
+      <div class="mode">
+        <div class="mode-title"><span class="ic">🚀</span> Classic</div>
+        <p>Three lives. The full WS Drift experience — escalating wave count, every fighter unlocked at level 10. Perfect for marathon runs.</p>
+      </div>
+      <div class="mode">
+        <div class="mode-title"><span class="ic">⏱️</span> Time Attack</div>
+        <p>One life. Faster pacing. No second chances. The mode for proving you've actually mastered the formations.</p>
+      </div>
+      <div class="mode">
+        <div class="mode-title"><span class="ic">👑</span> Boss Rush</div>
+        <p>Two lives. Every single wave is all bosses. Highest possible points per kill — and the highest possible bullet count to dodge.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🛸 17 Fighters. 5 tiers. One favorite.</h2>
+      <p class="intro" style="margin-bottom: 16px;">Find the ship that matches how you play. Lean glass-cannon? Tank with a tighter hitbox? Power-up extender? Buy once, keep forever — every fighter is a one-time non-consumable purchase.</p>
+      <div class="tier-row">
+        <div class="tier-name">Standard <span class="tier-price">FREE</span></div>
+        <div class="tier-desc">The balanced starter. Available from your first launch.</div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-name">Light Tier <span class="tier-price">$0.99</span></div>
+        <div class="tier-desc">Striker, Phantom, Drifter, Whisper. Each tunes one stat hard — pick the one that fits your style.</div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-name">Mid Tier <span class="tier-price">$1.99</span></div>
+        <div class="tier-desc">Reaver, Sentinel, Pulse, Aegis, Razor, Cipher. Two-stat sidegrades for confident pilots.</div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-name">Heavy Tier <span class="tier-price">$2.99</span></div>
+        <div class="tier-desc">Vanguard, Tempest, Wraith, Hammer. Multi-stat builds — fast fire AND a tighter hitbox.</div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-name">Apex Tier <span class="tier-price">$4.99</span></div>
+        <div class="tier-desc">Apex (all-rounder) and Voidlord (power-up specialist). Top-of-line, no compromises.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚡ Features</h2>
+      <ul>
+        <li><span class="ic">🌊</span><span><strong>Procedural waves</strong> — every formation is generated from a unique level + wave seed. No two runs play out the same.</span></li>
+        <li><span class="ic">🎮</span><span><strong>One-handed drift control</strong> — drag anywhere, ship responds to motion. Thumb-friendly across iPhone and iPad.</span></li>
+        <li><span class="ic">🔥</span><span><strong>Auto-fire bolts</strong> — focus on dodging and positioning. The shooting takes care of itself.</span></li>
+        <li><span class="ic">🚀</span><span><strong>17 fighters</strong> — five tiers from free Standard up to Apex-tier Voidlord. One-time purchases.</span></li>
+        <li><span class="ic">🎯</span><span><strong>3 modes</strong> — Classic, Time Attack, Boss Rush. Each pacing has its own leaderboard.</span></li>
+        <li><span class="ic">🏆</span><span><strong>112 achievements</strong> — score, kills, rounds, ship mastery, mode wins.</span></li>
+        <li><span class="ic">📅</span><span><strong>Daily play streak</strong> — keep the flame alive with a once-a-day visit. Reminder fires at 8pm if your streak is about to break.</span></li>
+        <li><span class="ic">🎵</span><span><strong>Game Center leaderboards</strong> — see how you stack against the world.</span></li>
+        <li><span class="ic">💎</span><span><strong>Free to play</strong> — no energy bars, no pay-to-win, no subscription. Optional Remove Ads for $2.99.</span></li>
+        <li><span class="ic">🔒</span><span><strong>Privacy first</strong> — no server, no account required. Game Center is optional.</span></li>
+      </ul>
+    </div>
+
+    <div class="card pitch">
+      <h2>Ready to fly?</h2>
+      <p class="intro" style="margin-bottom: 20px;">WS Drift is free on the App Store. Download it now, fly the free Standard fighter, and see if you can crack round 5.</p>
+      <p style="text-align: center;">
+        <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download" style="margin-bottom: 0;">
+          <span class="apple"></span>
+          <span><small>Download on the</small><br>App Store</span>
+        </a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>📬 Get in touch</h2>
       <ul>
         <li><span class="ic">🔒</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></span></li>
-        <li><span class="ic">🛟</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/support.md">Support</a></span></li>
+        <li><span class="ic">🛟</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/support.md">Support &amp; FAQ</a></span></li>
         <li><span class="ic">✉️</span><span><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></span></li>
       </ul>
     </div>
 
     <div class="footer">
-      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios.
+      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios. Made with neon, caffeine, and too many Galaga replays.
     </div>
   </div>
 </body>
