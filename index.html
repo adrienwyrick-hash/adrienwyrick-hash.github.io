@@ -680,74 +680,66 @@
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
-  /* ---------- Inline privacy policy section ---------- */
-  .privacy-section {
-    padding: 80px 32px 40px;
-    max-width: 880px;
+  /* ---------- Inline privacy section (near footer) ---------- */
+  .privacy-strip {
+    max-width: var(--maxw);
     margin: 0 auto;
-    position: relative;
-    z-index: 2;
+    padding: 24px 32px 8px;
+    position: relative; z-index: 2;
   }
-  .privacy-section details {
-    background: var(--surface);
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  .privacy-strip details {
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 0;
+    border-radius: 14px;
+    background: rgba(20, 28, 32, 0.4);
     overflow: hidden;
   }
-  .privacy-section summary {
-    list-style: none;
-    cursor: pointer;
-    padding: 28px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+  .privacy-strip summary {
+    list-style: none; cursor: pointer;
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
     transition: background 0.2s var(--ease);
   }
-  .privacy-section summary::-webkit-details-marker { display: none; }
-  .privacy-section summary:hover { background: rgba(255, 255, 255, 0.02); }
-  .privacy-section summary .sum-title {
-    font-family: var(--display); font-weight: 700; font-size: 22px;
-    color: var(--gold); letter-spacing: -0.01em;
+  .privacy-strip summary::-webkit-details-marker { display: none; }
+  .privacy-strip summary:hover { background: rgba(255, 255, 255, 0.02); }
+  .privacy-strip .sum-label {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--cyan); letter-spacing: 3px; text-transform: uppercase;
     display: inline-flex; align-items: center; gap: 12px;
   }
-  .privacy-section summary .sum-title::before {
-    content: ''; width: 24px; height: 1px; background: var(--cyan);
+  .privacy-strip .sum-label::before {
+    content: ''; width: 18px; height: 1px; background: var(--cyan);
   }
-  .privacy-section summary .chevron {
-    width: 16px; height: 16px;
+  .privacy-strip .chevron {
+    width: 14px; height: 14px;
     stroke: var(--text-dim); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
     transition: transform 0.3s var(--ease);
   }
-  .privacy-section details[open] summary .chevron { transform: rotate(180deg); }
-  .privacy-section .policy-body {
-    padding: 0 32px 32px;
+  .privacy-strip details[open] .chevron { transform: rotate(180deg); }
+  .privacy-strip .policy-body {
+    padding: 0 24px 24px;
     border-top: 1px solid var(--border);
-    margin-top: -1px;
   }
-  .privacy-section .policy-body h3 {
+  .privacy-strip .policy-body h3 {
     font-family: var(--display); font-weight: 600;
-    font-size: 17px; color: var(--cyan); margin: 24px 0 8px;
+    font-size: 15px; color: var(--cyan); margin: 20px 0 6px;
     letter-spacing: -0.005em;
   }
-  .privacy-section .policy-body h3:first-child { margin-top: 24px; }
-  .privacy-section .policy-body p {
-    color: var(--text-muted); line-height: 1.7; font-size: 15px; margin: 0 0 12px;
+  .privacy-strip .policy-body h3:first-child { margin-top: 18px; }
+  .privacy-strip .policy-body p {
+    color: var(--text-muted); line-height: 1.65; font-size: 14px; margin: 0 0 10px;
   }
-  .privacy-section .policy-body ul {
-    color: var(--text-muted); line-height: 1.7; font-size: 15px;
-    padding-left: 22px; margin: 0 0 12px;
+  .privacy-strip .policy-body ul {
+    color: var(--text-muted); line-height: 1.65; font-size: 14px;
+    padding-left: 20px; margin: 0 0 10px;
   }
-  .privacy-section .policy-body li { margin-bottom: 6px; }
-  .privacy-section .policy-body strong { color: var(--text); font-weight: 600; }
-  .privacy-section .policy-body a { color: var(--cyan); text-decoration: none; }
-  .privacy-section .policy-body a:hover { text-decoration: underline; }
-  .privacy-section .effective {
-    font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+  .privacy-strip .policy-body li { margin-bottom: 5px; }
+  .privacy-strip .policy-body strong { color: var(--text); font-weight: 600; }
+  .privacy-strip .policy-body a { color: var(--cyan); text-decoration: none; }
+  .privacy-strip .policy-body a:hover { text-decoration: underline; }
+  .privacy-strip .effective {
+    font-family: var(--mono); font-size: 10px; color: var(--text-dim);
     letter-spacing: 1.5px; text-transform: uppercase;
-    margin: 0 0 18px;
+    margin: 0 0 12px;
   }
 
   /* ---------- Back to top button ---------- */
@@ -1066,11 +1058,11 @@
     </div>
   </section>
 
-  <!-- Inline privacy policy (lives on the homepage so wsdrift.com itself satisfies the App Store privacy URL) -->
-  <section class="privacy-section" id="privacy" aria-label="Privacy Policy">
+  <!-- Inline privacy policy (sectioned in just above the footer near Support/Contact) -->
+  <div class="privacy-strip" id="privacy">
     <details>
       <summary>
-        <span class="sum-title">Privacy Policy</span>
+        <span class="sum-label">Privacy Policy</span>
         <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
       </summary>
       <div class="policy-body">
@@ -1121,7 +1113,7 @@
         <p>For questions about this privacy policy: <a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></p>
       </div>
     </details>
-  </section>
+  </div>
 
   <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg viewBox="0 0 24 24" aria-hidden="true">
