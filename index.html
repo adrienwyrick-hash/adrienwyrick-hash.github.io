@@ -3,94 +3,422 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WS Drift — Wyrick Studios</title>
+<title>WS Drift — A wave-based arcade shooter for iOS | Wyrick Studios</title>
+
+<!-- SEO -->
+<meta name="description" content="WS Drift is a free wave-based arcade shooter for iPhone and iPad. One-handed drift control, 17 fighters, 3 modes, 112 achievements. No grind, no pay-to-win.">
+<meta name="author" content="Wyrick Studios">
+<meta name="theme-color" content="#0c1518">
+<link rel="canonical" href="https://wsdrift.com/">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WS Drift">
+<meta property="og:title" content="WS Drift — A wave-based arcade shooter for iOS">
+<meta property="og:description" content="Drift. Aim. Survive. 17 fighters, 3 modes, procedurally generated waves. Free on the App Store.">
+<meta property="og:url" content="https://wsdrift.com/">
+<meta property="og:image" content="https://wsdrift.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WS Drift — A wave-based arcade shooter for iOS">
+<meta name="twitter:description" content="Drift. Aim. Survive. 17 fighters, 3 modes, procedurally generated waves. Free on the App Store.">
+<meta name="twitter:image" content="https://wsdrift.com/og-image.png">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "WS Drift",
+  "operatingSystem": "iOS 15+",
+  "applicationCategory": "GameApplication",
+  "genre": "Arcade",
+  "url": "https://wsdrift.com/",
+  "image": "https://wsdrift.com/MenuHero.png",
+  "description": "A wave-based arcade shooter for iPhone and iPad with one-handed drift control, 17 fighters, and 3 modes.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wyrick Studios",
+    "url": "https://wsdrift.com/"
+  },
+  "downloadUrl": "https://apps.apple.com/app/ws-drift/id6773799597"
+}
+</script>
+
 <style>
+  :root {
+    --bg-0: #0c1518;
+    --bg-1: #14242a;
+    --surface: rgba(12, 21, 24, 0.78);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e8f5f7;
+    --text-muted: #c9d5d7;
+    --text-dim: #6e8085;
+    --accent: #00f2ff;
+    --accent-soft: rgba(0, 242, 255, 0.14);
+    --warm: #ffb84d;
+    --warm-soft: rgba(255, 184, 77, 0.14);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --max-width: 880px;
+  }
+
   * { box-sizing: border-box; }
-  body { background: radial-gradient(ellipse at top, #14242a 0%, #0c1518 60%); color: #e8f5f7; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; position: relative; min-height: 100vh; }
 
-  .stars, .stars::after { position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.85), transparent), radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.7), transparent), radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.6), transparent), radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.65), transparent), radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.75), transparent), radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.7), transparent), radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.85), transparent), radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.5), transparent), radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.6), transparent); background-size: 100% 100%; pointer-events: none; z-index: 0; }
-  .stars::after { content: ''; animation: twinkle 4s ease-in-out infinite alternate; opacity: 0.5; }
-  @keyframes twinkle { from { opacity: 0.35; } to { opacity: 0.85; } }
+  html { scroll-behavior: smooth; }
 
-  .field { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-  .ship { position: absolute; top: -60px; width: 28px; height: 32px; clip-path: polygon(50% 100%, 0% 30%, 50% 0%, 100% 30%); opacity: 0.55; animation: fall linear infinite; filter: drop-shadow(0 0 8px currentColor); }
-  .bee       { color: #ffd400; background: linear-gradient(180deg, #fff, #ffd400 50%, rgba(255,212,0,0.4)); }
-  .butterfly { color: #ff3ee0; background: linear-gradient(180deg, #fff, #ff3ee0 50%, rgba(255,62,224,0.4)); }
-  .boss      { color: #00f2ff; background: linear-gradient(180deg, #fff, #00f2ff 50%, rgba(0,242,255,0.4)); width: 38px; height: 44px; }
-  @keyframes fall { 0% { transform: translateY(-10vh) translateX(0) rotate(0deg); } 100% { transform: translateY(120vh) translateX(40px) rotate(15deg); } }
+  body {
+    background: radial-gradient(ellipse at top, var(--bg-1) 0%, var(--bg-0) 60%);
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
 
-  .container { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; padding: 60px 24px; text-align: center; }
-  .icon { width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 12px 60px rgba(0, 242, 255, 0.35), 0 0 0 1px rgba(255,255,255,0.06); margin-bottom: 24px; }
+  /* Subtle starfield, no animation */
+  .stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.75), transparent),
+      radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.55), transparent),
+      radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.55), transparent),
+      radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.45), transparent),
+      radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.55), transparent);
+  }
 
-  h1 { font-size: 64px; letter-spacing: -1.5px; margin: 0 0 8px; background: linear-gradient(90deg, #00f2ff 0%, #ffffff 50%, #00f2ff 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s ease-in-out infinite; text-shadow: 0 0 30px rgba(0,242,255,0.4); }
-  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-  .subtitle { font-size: 18px; color: #9bdadf; margin: 0 0 24px; letter-spacing: 1.5px; text-transform: uppercase; }
-  .tagline { font-size: 22px; color: #ffb84d; font-weight: 600; margin: 0 0 32px; font-style: italic; }
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+    text-align: center;
+  }
 
-  .download { display: inline-flex; align-items: center; gap: 10px; background: #000; color: #fff; padding: 10px 22px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.65); font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; text-decoration: none; transition: transform 0.18s ease, background 0.18s ease; margin-bottom: 14px; min-width: 200px; justify-content: center; }
+  /* Hero */
+  .icon {
+    width: 132px;
+    height: 132px;
+    border-radius: 30px;
+    box-shadow: 0 12px 60px rgba(0, 242, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.06);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(44px, 7vw, 64px);
+    letter-spacing: -1.5px;
+    margin: 0 0 8px;
+    color: var(--accent);
+    text-shadow: 0 0 32px rgba(0, 242, 255, 0.35);
+    font-weight: 700;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #9bdadf;
+    margin: 0 0 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tagline {
+    font-size: 20px;
+    color: var(--warm);
+    font-weight: 600;
+    margin: 0 0 32px;
+    font-style: italic;
+  }
+
+  /* App Store badge — Apple-style solid black, no border */
+  .download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #000;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.18s ease, background 0.18s ease;
+    min-width: 200px;
+    justify-content: center;
+    font-family: inherit;
+  }
   .download:hover { transform: translateY(-2px); background: #111; text-decoration: none; }
-  .download svg { width: 30px; height: 30px; flex-shrink: 0; }
+  .download:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .download svg { width: 28px; height: 28px; flex-shrink: 0; }
   .download .label { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1; }
-  .download .label small { font-size: 11px; font-weight: 400; letter-spacing: 0.2px; margin-bottom: 3px; opacity: 0.95; }
-  .download .label strong { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .download .label small { font-size: 11px; font-weight: 400; opacity: 0.95; margin-bottom: 3px; }
+  .download .label strong { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
 
-  .pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); color: #e8f5f7; padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; margin: 4px 4px 0; }
-  .pill:hover { transform: translateY(-2px); text-decoration: none; }
-  .support-btn { border: 1px solid rgba(0,242,255,0.4); }
-  .support-btn:hover { background: rgba(0,242,255,0.14); }
-  .privacy-btn { border: 1px solid rgba(255,184,77,0.4); }
-  .privacy-btn:hover { background: rgba(255,184,77,0.14); }
-  .pill-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 50px; }
+  /* Secondary pills */
+  .pill-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 18px 0 48px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .pill:hover { transform: translateY(-1px); text-decoration: none; }
+  .pill.support-btn:hover { background: var(--accent-soft); border-color: rgba(0,242,255,0.4); }
+  .pill.privacy-btn:hover { background: var(--warm-soft); border-color: rgba(255,184,77,0.4); }
+  .pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .pill .icon-sm { width: 16px; height: 16px; }
 
-  .feedback-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #00f2ff, #ff3ee0); color: #0c1518; padding: 14px 32px; border-radius: 999px; border: none; font-family: inherit; font-size: 16px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; box-shadow: 0 8px 30px rgba(0,242,255,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; }
-  .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,242,255,0.5); }
+  /* Hero gameplay video */
+  .hero-video {
+    margin: 0 auto 56px;
+    max-width: 320px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 20px 80px rgba(0, 242, 255, 0.25),
+      0 0 0 8px rgba(255,255,255,0.04),
+      0 0 0 9px rgba(255,255,255,0.08);
+    background: #000;
+  }
+  .hero-video video, .hero-video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-  h2 { font-size: 24px; color: #ffb84d; margin: 0 0 16px; }
-  h3 { font-size: 18px; color: #00f2ff; margin: 18px 0 6px; }
-  .intro { line-height: 1.65; color: #c9d5d7; text-align: left; font-size: 17px; }
-  a { color: #00f2ff; text-decoration: none; }
+  /* Section headings */
+  h2 {
+    font-size: 22px;
+    color: var(--warm);
+    margin: 0 0 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+  h2 .icon-sm { color: var(--warm); width: 22px; height: 22px; }
+
+  .intro {
+    line-height: 1.65;
+    color: var(--text-muted);
+    text-align: left;
+    font-size: 16px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 
-  .card { background: rgba(12,21,24,0.78); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 28px; margin: 18px 0; text-align: left; }
+  /* Cards */
+  .card {
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  .card.pitch {
+    background: linear-gradient(135deg, rgba(0,242,255,0.07), rgba(255,184,77,0.04));
+    border-color: rgba(0,242,255,0.2);
+  }
+  .card.pitch h2 { color: var(--accent); }
+  .card.pitch h2 .icon-sm { color: var(--accent); }
+
+  /* Feature list */
   ul { list-style: none; padding: 0; margin: 0; }
-  li { padding: 8px 0; color: #c9d5d7; line-height: 1.55; display: flex; align-items: flex-start; gap: 12px; }
-  li .ic { font-size: 20px; line-height: 1.4; flex-shrink: 0; }
+  .features li {
+    padding: 10px 0;
+    color: var(--text-muted);
+    line-height: 1.55;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .features li .icon-sm { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .features strong { color: var(--text); }
 
-  .mode { padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  /* Mode rows */
+  .mode { padding: 20px 0; border-bottom: 1px solid var(--border); }
   .mode:last-child { border: none; padding-bottom: 0; }
-  .mode-title { display: flex; align-items: center; gap: 10px; font-weight: 700; color: #ffffff; font-size: 17px; margin-bottom: 6px; }
-  .mode-title .ic { font-size: 22px; }
-  .mode p { margin: 0; color: #c9d5d7; line-height: 1.55; font-size: 15px; }
+  .mode:first-child { padding-top: 4px; }
+  .mode-title {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; color: #ffffff; font-size: 17px; margin-bottom: 6px;
+  }
+  .mode-title .icon-sm { color: var(--accent); width: 20px; height: 20px; }
+  .mode p { margin: 0; color: var(--text-muted); line-height: 1.55; font-size: 15px; }
 
-  .tier-row { display: grid; grid-template-columns: 140px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  /* Tier rows */
+  .tier-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
   .tier-row:last-child { border: none; }
-  .tier-name { color: #00f2ff; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
-  .tier-desc { color: #c9d5d7; font-size: 14px; line-height: 1.5; }
-  .tier-price { color: #ffb84d; font-weight: 600; }
+  .tier-name { color: var(--accent); font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+  .tier-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+  .tier-price { color: var(--warm); font-weight: 600; }
 
-  .pitch { background: linear-gradient(135deg, rgba(0,242,255,0.08), rgba(255,62,224,0.06)); border-color: rgba(0,242,255,0.2); }
-  .pitch h2 { color: #00f2ff; }
+  /* Screenshots */
+  .screenshots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0 0;
+  }
+  .shot {
+    aspect-ratio: 9 / 19.5;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 30px rgba(0, 242, 255, 0.1);
+  }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 640px) {
+    .screenshots { grid-template-columns: repeat(2, 1fr); }
+    .shot:nth-child(3) { display: none; }
+  }
 
-  .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #6e8085; }
+  /* Feedback CTA */
+  .feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--warm));
+    color: var(--bg-0);
+    padding: 14px 32px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0,242,255,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,242,255,0.45); }
+  .feedback-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .feedback-btn .icon-sm { width: 18px; height: 18px; }
+
+  /* Contact list */
+  .contact-list li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+  }
+  .contact-list .icon-sm { color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .footer a { color: var(--text-dim); }
+  .footer a:hover { color: var(--text-muted); }
+
+  /* Icon base */
+  .icon-sm {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Small screens */
+  @media (max-width: 520px) {
+    .container { padding: 40px 18px 60px; }
+    .card { padding: 24px; }
+    .tier-row { grid-template-columns: 1fr; gap: 4px; }
+    h1 { font-size: 44px; }
+  }
 </style>
 </head>
 <body>
-  <div class="stars"></div>
+  <!-- Lucide icon sprite (MIT) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+      <symbol id="i-gamepad" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></symbol>
+      <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+      <symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
+      <symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/><path d="M5 20h14"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+      <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+      <symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
+      <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+      <symbol id="i-crosshair" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></symbol>
+      <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+      <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5c2 0 4.5 1.5 4.5 5"/><path d="M16.5 8a2.5 2.5 0 0 0 0-5c-2 0-4.5 1.5-4.5 5"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+      <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+    </defs>
+  </svg>
 
-  <div class="field">
-    <div class="ship bee"       style="left: 6%;  animation-duration: 7s;   animation-delay: 0s;"></div>
-    <div class="ship butterfly" style="left: 17%; animation-duration: 9s;   animation-delay: 1.2s;"></div>
-    <div class="ship bee"       style="left: 29%; animation-duration: 6s;   animation-delay: 2.5s;"></div>
-    <div class="ship boss"      style="left: 41%; animation-duration: 11s;  animation-delay: 0.8s;"></div>
-    <div class="ship butterfly" style="left: 53%; animation-duration: 8s;   animation-delay: 3.1s;"></div>
-    <div class="ship bee"       style="left: 64%; animation-duration: 7.5s; animation-delay: 1.8s;"></div>
-    <div class="ship boss"      style="left: 75%; animation-duration: 10s;  animation-delay: 4s;"></div>
-    <div class="ship butterfly" style="left: 86%; animation-duration: 9s;   animation-delay: 0.4s;"></div>
-    <div class="ship bee"       style="left: 12%; animation-duration: 8s;   animation-delay: 5.5s;"></div>
-    <div class="ship boss"      style="left: 48%; animation-duration: 12s;  animation-delay: 6.2s;"></div>
-    <div class="ship butterfly" style="left: 71%; animation-duration: 7s;   animation-delay: 4.7s;"></div>
-    <div class="ship bee"       style="left: 92%; animation-duration: 8.5s; animation-delay: 2.3s;"></div>
-  </div>
+  <div class="stars"></div>
 
   <div class="container">
     <img src="MenuHero.png" alt="WS Drift app icon" class="icon">
@@ -99,7 +427,7 @@
     <p class="tagline">"Drift. Aim. Survive."</p>
 
     <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
-      <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+      <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff" aria-hidden="true">
         <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
       </svg>
       <span class="label">
@@ -110,47 +438,67 @@
 
     <div class="pill-row">
       <a href="/support.html" class="pill support-btn">
-        <span style="font-size: 18px;">🛟</span>
-        <span>Need help? Visit Support</span>
+        <svg class="icon-sm" aria-hidden="true"><use href="#i-buoy"/></svg>
+        <span>Support</span>
       </a>
       <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md" class="pill privacy-btn">
-        <span style="font-size: 18px;">🔒</span>
+        <svg class="icon-sm" aria-hidden="true"><use href="#i-lock"/></svg>
         <span>Privacy Policy</span>
       </a>
     </div>
 
-    <p class="intro">Step into the cockpit of a neon-trail starfighter and lock in for an arcade shooter built for one-handed thumb skill. <strong>WS Drift</strong> takes the classic Galaga-style squadron rush, throws in a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers of power. Every round is a chain of procedurally generated formations — no two waves are ever quite the same.</p>
+    <!-- Gameplay video. Drop a silent MP4 at /gameplay.mp4 (portrait, 8–12s loop). -->
+    <div class="hero-video" aria-label="WS Drift gameplay preview">
+      <video autoplay muted loop playsinline preload="metadata" poster="MenuHero.png">
+        <source src="gameplay.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <p class="intro" style="text-align: center; font-size: 17px; color: var(--text-muted); max-width: 640px; margin: 0 auto 40px;">
+      Step into the cockpit of a neon-trail starfighter built for one-handed thumb skill.
+      <strong style="color: var(--text);">WS Drift</strong> takes the classic Galaga-style squadron rush, adds a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers.
+    </p>
 
     <div class="card pitch">
-      <h2>Why WS Drift?</h2>
-      <p class="intro">Because most arcade shooters fall into one of two camps: too easy and forgettable, or too punishing for a quick session. <strong>WS Drift sits exactly in the middle.</strong> Pick it up for a 90-second run before bed. Lose yourself for an hour chasing your daily streak. Climb the Game Center leaderboard with friends. The skill ceiling is high, but the skill floor is just one drag of your thumb.</p>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-sparkles"/></svg>Why WS Drift?</h2>
+      <p class="intro">Most arcade shooters land in one of two camps: too easy and forgettable, or too punishing for a quick session. <strong>WS Drift sits exactly in the middle.</strong> Pick it up for a 90-second run before bed. Lose yourself for an hour chasing your daily streak. Climb the Game Center leaderboard against friends. The skill ceiling is high, but the skill floor is just one drag of your thumb.</p>
       <p class="intro" style="margin-top: 12px;">No grind. No energy bars. No pay-to-win. Just you, your fighter, and the next wave.</p>
     </div>
 
+    <!-- Screenshots. Drop /screenshot-1.png, /screenshot-2.png, /screenshot-3.png (portrait gameplay stills). -->
     <div class="card">
-      <h2>🎮 How it plays</h2>
-      <p class="intro">Drag anywhere on the screen to drift your fighter — your thumb stays where it lands, the ship reacts to your motion. Bolts fire automatically from your nose-cone, straight up. Slide sideways to put each enemy in your lane. The ones you don't shoot down loop back around for another pass.</p>
-      <p class="intro" style="margin-top: 12px;">Each round is a series of waves — squadrons that swoop, dive, and shoot back. Clear them all and the round advances. The next round throws denser formations at you, with more bosses, sharper dives, and tighter timing.</p>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-target"/></svg>Screens</h2>
+      <div class="screenshots">
+        <div class="shot"><img src="screenshot-1.png" alt="WS Drift gameplay — drifting through a wave" loading="lazy"></div>
+        <div class="shot"><img src="screenshot-2.png" alt="WS Drift gameplay — boss encounter" loading="lazy"></div>
+        <div class="shot"><img src="screenshot-3.png" alt="WS Drift gameplay — fighter selection" loading="lazy"></div>
+      </div>
     </div>
 
     <div class="card">
-      <h2>🎯 Three modes for three moods</h2>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-gamepad"/></svg>How it plays</h2>
+      <p class="intro">Drag anywhere on the screen to drift your fighter — your thumb stays where it lands, the ship reacts to your motion. Bolts fire automatically from your nose-cone, straight up. Slide sideways to line each enemy up in your lane. The ones you don't shoot down loop back for another pass.</p>
+      <p class="intro" style="margin-top: 12px;">Each round is a series of waves — squadrons that swoop, dive, and shoot back. Clear them all and the round advances. The next round throws denser formations, sharper dives, and tighter timing.</p>
+    </div>
+
+    <div class="card">
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-layers"/></svg>Three modes for three moods</h2>
       <div class="mode">
-        <div class="mode-title"><span class="ic">🚀</span> Classic</div>
+        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>Classic</div>
         <p>Three lives. The full WS Drift experience — escalating wave count, every fighter unlocked at level 10. Perfect for marathon runs.</p>
       </div>
       <div class="mode">
-        <div class="mode-title"><span class="ic">⏱️</span> Time Attack</div>
+        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-timer"/></svg>Time Attack</div>
         <p>One life. Faster pacing. No second chances. The mode for proving you've actually mastered the formations.</p>
       </div>
       <div class="mode">
-        <div class="mode-title"><span class="ic">👑</span> Boss Rush</div>
-        <p>Two lives. Every single wave is all bosses. Highest possible points per kill — and the highest possible bullet count to dodge.</p>
+        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-crown"/></svg>Boss Rush</div>
+        <p>Two lives. Every wave is all bosses. Highest possible points per kill — and the highest possible bullet count to dodge.</p>
       </div>
     </div>
 
     <div class="card">
-      <h2>🛸 17 Fighters. 5 tiers. One favorite.</h2>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>17 Fighters. 5 tiers. One favorite.</h2>
       <p class="intro" style="margin-bottom: 16px;">Find the ship that matches how you play. Lean glass-cannon? Tank with a tighter hitbox? Power-up extender? Buy once, keep forever — every fighter is a one-time non-consumable purchase.</p>
       <div class="tier-row">
         <div class="tier-name">Standard <span class="tier-price">FREE</span></div>
@@ -166,7 +514,7 @@
       </div>
       <div class="tier-row">
         <div class="tier-name">Heavy Tier <span class="tier-price">$2.99</span></div>
-        <div class="tier-desc">Vanguard, Tempest, Wraith, Hammer. Multi-stat builds — fast fire AND a tighter hitbox.</div>
+        <div class="tier-desc">Vanguard, Tempest, Wraith, Hammer. Multi-stat builds — fast fire and a tighter hitbox.</div>
       </div>
       <div class="tier-row">
         <div class="tier-name">Apex Tier <span class="tier-price">$4.99</span></div>
@@ -175,27 +523,27 @@
     </div>
 
     <div class="card">
-      <h2>⚡ Features</h2>
-      <ul>
-        <li><span class="ic">🌊</span><span><strong>Procedural waves</strong> — every formation is generated from a unique level + wave seed. No two runs play out the same.</span></li>
-        <li><span class="ic">🎮</span><span><strong>One-handed drift control</strong> — drag anywhere, ship responds to motion. Thumb-friendly across iPhone and iPad.</span></li>
-        <li><span class="ic">🔥</span><span><strong>Auto-fire bolts</strong> — focus on dodging and positioning. The shooting takes care of itself.</span></li>
-        <li><span class="ic">🚀</span><span><strong>17 fighters</strong> — five tiers from free Standard up to Apex-tier Voidlord. One-time purchases.</span></li>
-        <li><span class="ic">🎯</span><span><strong>3 modes</strong> — Classic, Time Attack, Boss Rush. Each pacing has its own leaderboard.</span></li>
-        <li><span class="ic">🏆</span><span><strong>112 achievements</strong> — score, kills, rounds, ship mastery, mode wins.</span></li>
-        <li><span class="ic">📅</span><span><strong>Daily play streak</strong> — keep the flame alive with a once-a-day visit. Reminder fires at 8pm if your streak is about to break.</span></li>
-        <li><span class="ic">🎵</span><span><strong>Game Center leaderboards</strong> — see how you stack against the world.</span></li>
-        <li><span class="ic">💎</span><span><strong>Free to play</strong> — no energy bars, no pay-to-win, no subscription. Optional Remove Ads for $2.99.</span></li>
-        <li><span class="ic">🔒</span><span><strong>Privacy first</strong> — no server, no account required. Game Center is optional.</span></li>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-zap"/></svg>Features</h2>
+      <ul class="features">
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-waves"/></svg><span><strong>Procedural waves</strong> — every formation is generated from a unique level + wave seed. No two runs play out the same.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-pointer"/></svg><span><strong>One-handed drift control</strong> — drag anywhere, ship responds to motion. Thumb-friendly across iPhone and iPad.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-crosshair"/></svg><span><strong>Auto-fire bolts</strong> — focus on dodging and positioning. The shooting takes care of itself.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg><span><strong>17 fighters</strong> — five tiers from free Standard up to Apex-tier Voidlord. One-time purchases.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span><strong>3 modes</strong> — Classic, Time Attack, Boss Rush. Each pacing has its own leaderboard.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span><strong>112 achievements</strong> — score, kills, rounds, ship mastery, mode wins.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-flame"/></svg><span><strong>Daily play streak</strong> — keep the flame alive with a once-a-day visit. Reminder at 8pm if your streak is about to break.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-award"/></svg><span><strong>Game Center leaderboards</strong> — see how you stack against the world.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-gift"/></svg><span><strong>Free to play</strong> — no energy bars, no pay-to-win, no subscription. Optional Remove Ads for $2.99.</span></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Privacy first</strong> — no server, no account required. Game Center is optional.</span></li>
       </ul>
     </div>
 
     <div class="card pitch">
-      <h2>Ready to fly?</h2>
-      <p class="intro" style="margin-bottom: 20px;">WS Drift is free on the App Store. Download it now, fly the free Standard fighter, and see if you can crack round 5.</p>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>Ready to fly?</h2>
+      <p class="intro" style="margin-bottom: 24px;">WS Drift is free on the App Store. Download it now, fly the Standard fighter, and see if you can crack round 5.</p>
       <div style="text-align: center;">
-        <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download" style="margin-bottom: 0;">
-          <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+        <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
+          <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff" aria-hidden="true">
             <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
           </svg>
           <span class="label">
@@ -207,8 +555,8 @@
     </div>
 
     <div class="card">
-      <h2>📨 Got feedback?</h2>
-      <p class="intro" style="margin-bottom: 20px;">Bug? Idea? Wave you'd like to see? Drop us a note — every message is read.</p>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg>Got feedback?</h2>
+      <p class="intro" style="margin-bottom: 24px;">Bug? Idea? Wave you'd like to see? Drop us a note — every message is read.</p>
       <div style="text-align: center;">
         <button data-tally-open="XxNMJV"
                 data-tally-layout="modal"
@@ -216,22 +564,24 @@
                 data-tally-emoji-text="📨"
                 data-tally-emoji-animation="bounce"
                 class="feedback-btn">
-          📨 Send Feedback
+          <svg class="icon-sm" aria-hidden="true" style="stroke: var(--bg-0);"><use href="#i-mail"/></svg>
+          Send Feedback
         </button>
       </div>
     </div>
 
     <div class="card">
-      <h2>📬 Get in touch</h2>
-      <ul>
-        <li><span class="ic">🛟</span><span><a href="/support.html">Support &amp; FAQ</a></span></li>
-        <li><span class="ic">🔒</span><span><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></span></li>
-        <li><span class="ic">✉️</span><span><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></span></li>
+      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</h2>
+      <ul class="contact-list">
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-buoy"/></svg><a href="/support.html">Support &amp; FAQ</a></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-lock"/></svg><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></li>
+        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></li>
       </ul>
     </div>
 
     <div class="footer">
-      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios. Made with neon, caffeine, and too many Galaga replays.
+      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios.<br>
+      Independent games for iOS, designed in the Pacific Northwest.
     </div>
   </div>
 
