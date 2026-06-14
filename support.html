@@ -279,11 +279,23 @@
 
   <script>
     (function() {
-      const toTop = () => { if (!location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
-      toTop();
-      document.addEventListener('DOMContentLoaded', toTop);
-      window.addEventListener('load', toTop);
-      window.addEventListener('pageshow', toTop);
+      const hasHash = () => location.hash && location.hash !== '#';
+      function forceTop() {
+        if (hasHash()) return;
+        const html = document.documentElement;
+        const prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        html.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+        html.style.scrollBehavior = prev;
+      }
+      forceTop();
+      const iv = setInterval(forceTop, 50);
+      setTimeout(() => clearInterval(iv), 500);
+      document.addEventListener('DOMContentLoaded', forceTop);
+      window.addEventListener('load', forceTop);
+      window.addEventListener('pageshow', forceTop);
     })();
   </script>
   <script>

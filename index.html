@@ -711,7 +711,7 @@
 
   <!-- NAV -->
   <nav class="top" id="topnav">
-    <a href="#" class="brand" data-magnetic>
+    <a href="/" class="brand" data-magnetic>
       <img src="MenuHero.png" alt="">
       <span class="brand-text">WS Drift</span>
       <span class="brand-tag"><span class="dot"></span>v1.0 · Free</span>
@@ -990,16 +990,32 @@
 
   <script async src="https://tally.so/widgets/embed.js"></script>
   <script>
-    // Refresh always lands at top — multiple guards to defeat browser scroll restoration
+    // Refresh always lands at top. Aggressive — defeats Safari scroll restoration,
+    // the CSS scroll-behavior: smooth animation, and Safari's bfcache restore.
     (function() {
-      const toTop = () => {
-        if (location.hash) return;
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      };
-      toTop();
-      document.addEventListener('DOMContentLoaded', toTop);
-      window.addEventListener('load', toTop);
-      window.addEventListener('pageshow', toTop);  // also fires on bfcache restore
+      const hasMeaningfulHash = () => location.hash && location.hash !== '#';
+
+      function forceTop() {
+        if (hasMeaningfulHash()) return;
+        const html = document.documentElement;
+        const prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        html.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+        html.style.scrollBehavior = prev;
+      }
+
+      forceTop();
+
+      // Keep forcing for 500ms after load — defeats browser restoration that
+      // fires after our first call.
+      const iv = setInterval(forceTop, 50);
+      setTimeout(() => clearInterval(iv), 500);
+
+      document.addEventListener('DOMContentLoaded', forceTop);
+      window.addEventListener('load', forceTop);
+      window.addEventListener('pageshow', forceTop);
     })();
   </script>
   <script>
