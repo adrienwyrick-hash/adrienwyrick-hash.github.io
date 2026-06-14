@@ -299,38 +299,6 @@
   .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: var(--cyan); color: var(--cyan); }
   .btn svg { width: 18px; height: 18px; }
 
-  /* Hero scroll cue */
-  .scroll-cue {
-    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-    color: var(--text-dim); font-family: var(--mono); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 3px; display: flex; flex-direction: column; align-items: center; gap: 10px;
-  }
-  .scroll-cue::after {
-    content: ''; width: 1px; height: 40px;
-    background: linear-gradient(180deg, var(--cyan), transparent);
-    animation: cuePulse 1.8s ease-in-out infinite;
-  }
-  @keyframes cuePulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); } }
-
-  /* ---------- Marquee ---------- */
-  .marquee {
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    background: rgba(0, 0, 0, 0.3); padding: 28px 0; overflow: hidden;
-    white-space: nowrap; position: relative;
-    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  }
-  .marquee-track {
-    display: inline-flex; align-items: center; gap: 56px;
-    animation: marquee 38s linear infinite;
-    font-family: var(--display); font-weight: 700;
-    font-size: clamp(32px, 5vw, 56px); letter-spacing: -0.02em;
-  }
-  .marquee-track span { color: var(--text); }
-  .marquee-track .sep { color: var(--cyan); font-size: 0.7em; }
-  .marquee-track .alt { color: var(--text-dim); font-style: italic; font-weight: 400; }
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
   /* ---------- Stat numbers ---------- */
   .stats { padding-top: 100px; }
   .stats .grid {
@@ -752,26 +720,7 @@
         Watch Gameplay
       </a>
     </div>
-    <div class="scroll-cue">scroll</div>
   </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>DRIFT TO AIM</span><span class="sep">✦</span>
-      <span class="alt">17 Fighters</span><span class="sep">✦</span>
-      <span>NO PAY TO WIN</span><span class="sep">✦</span>
-      <span class="alt">Procedural Waves</span><span class="sep">✦</span>
-      <span>BOSS RUSH</span><span class="sep">✦</span>
-      <span class="alt">112 Achievements</span><span class="sep">✦</span>
-      <span>DRIFT TO AIM</span><span class="sep">✦</span>
-      <span class="alt">17 Fighters</span><span class="sep">✦</span>
-      <span>NO PAY TO WIN</span><span class="sep">✦</span>
-      <span class="alt">Procedural Waves</span><span class="sep">✦</span>
-      <span>BOSS RUSH</span><span class="sep">✦</span>
-      <span class="alt">112 Achievements</span><span class="sep">✦</span>
-    </div>
-  </div>
 
   <!-- STATS -->
   <section class="stats" style="padding-bottom: 0;">
