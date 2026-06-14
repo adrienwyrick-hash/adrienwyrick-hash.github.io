@@ -270,7 +270,14 @@
     font-size: 15px; color: var(--text-muted); margin: 0 auto 48px; max-width: 560px;
     font-family: var(--mono); text-transform: uppercase; letter-spacing: 2px;
   }
-  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .hero .ctas {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    width: 100%; max-width: 480px; margin: 0 auto;
+  }
+  @media (max-width: 480px) {
+    .hero .ctas .btn { flex: 1 1 100%; justify-content: center; }
+    .hero .ctas { gap: 10px; }
+  }
 
   .btn {
     display: inline-flex; align-items: center; gap: 10px;
@@ -393,6 +400,33 @@
     width: 100%; height: 100%; object-fit: cover; display: block; background: #000;
     transform: translateZ(0);
     backface-visibility: hidden;
+  }
+  .video-play-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    color: var(--cyan);
+    padding: 0; margin: 0; font: inherit;
+    transition: background 0.2s var(--ease);
+  }
+  .video-play-overlay.show { display: flex; }
+  .video-play-overlay:hover { background: rgba(0, 0, 0, 0.6); }
+  .video-play-overlay svg {
+    width: 64px; height: 64px;
+    filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.7));
+  }
+  .video-play-overlay .label {
+    position: absolute; bottom: 24px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--cyan);
+  }
+  /* On phones, flatten the 3D-perspective transform so video stays smooth */
+  @media (max-width: 720px) {
+    .showcase .phone { transform: none !important; }
+    .showcase .phone:hover { transform: none !important; }
   }
   .showcase .ann { font-family: var(--mono); font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; line-height: 1.6; }
   .showcase .ann .val { color: var(--cyan); font-size: 24px; font-family: var(--display); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: -0.01em; text-transform: none; }
@@ -1126,8 +1160,13 @@
       });
     })();
 
-    // ---- Magnetic buttons ----
+    // ---- Magnetic buttons (desktop only — touch synthesizes mousemove without reliable mouseleave) ----
     (function() {
+      if (window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+        // Make sure no stale transform is left on data-magnetic elements
+        document.querySelectorAll('[data-magnetic]').forEach(el => { el.style.transform = ''; });
+        return;
+      }
       const els = document.querySelectorAll('[data-magnetic]');
       els.forEach(el => {
         el.addEventListener('mousemove', (e) => {
@@ -1431,23 +1470,46 @@
       if (!prefersReduce) setInterval(morph, 2600);
     })();
 
-    // ---- Keep gameplay video playing through scroll/visibility changes ----
+    // ---- Gameplay video: keep playing, fall back to tap-to-play on iOS ----
     (function() {
       const v = document.getElementById('gameplayVideo');
       if (!v) return;
+      const phone = v.parentElement;
+
+      // Build the tap-to-play overlay (shown only if autoplay is blocked)
+      const overlay = document.createElement('button');
+      overlay.className = 'video-play-overlay';
+      overlay.setAttribute('aria-label', 'Play gameplay video');
+      overlay.innerHTML =
+        '<svg viewBox="0 0 80 80" aria-hidden="true">' +
+          '<circle cx="40" cy="40" r="38" fill="rgba(0,242,255,0.12)" stroke="currentColor" stroke-width="2"/>' +
+          '<polygon points="32,24 60,40 32,56" fill="currentColor"/>' +
+        '</svg>' +
+        '<span class="label">Tap to play</span>';
+      phone.appendChild(overlay);
 
       const tryPlay = () => {
         const pr = v.play();
-        if (pr && typeof pr.catch === 'function') pr.catch(() => {});
+        if (pr && typeof pr.then === 'function') {
+          pr.then(() => overlay.classList.remove('show'))
+            .catch(() => overlay.classList.add('show'));
+        }
       };
 
-      // Initial nudge — autoplay attribute can be blocked until user interaction.
+      overlay.addEventListener('click', (e) => {
+        e.preventDefault();
+        tryPlay();
+      });
+
+      v.addEventListener('play', () => overlay.classList.remove('show'));
+      v.addEventListener('playing', () => overlay.classList.remove('show'));
+
+      // Try autoplay
       tryPlay();
       v.addEventListener('canplay', tryPlay, { once: true });
       v.addEventListener('loadeddata', tryPlay, { once: true });
 
-      // Resume when scrolled into view; some browsers (Safari especially)
-      // pause out-of-view videos and don't restart them automatically.
+      // Resume when scrolled into view
       const io = new IntersectionObserver(entries => {
         entries.forEach(en => {
           if (en.isIntersecting && v.paused) tryPlay();
@@ -1455,17 +1517,13 @@
       }, { threshold: [0, 0.1, 0.5] });
       io.observe(v);
 
-      // Recover from browser tab visibility changes.
+      // Recover from tab visibility changes
       document.addEventListener('visibilitychange', () => {
         if (!document.hidden && v.paused) tryPlay();
       });
 
-      // Recover if playback stalls.
+      // Recover from stalls
       v.addEventListener('stalled', () => setTimeout(tryPlay, 80));
-      v.addEventListener('pause', () => {
-        // If the video wasn't paused by the user (no controls exposed), restart.
-        if (!document.hidden) setTimeout(() => { if (v.paused) tryPlay(); }, 60);
-      });
     })();
 
     // ---- Sticky mobile CTA: show after hero, hide near footer so links are tappable ----
