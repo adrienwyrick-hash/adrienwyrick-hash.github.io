@@ -274,6 +274,12 @@
   </footer>
 
   <script>
+    // Refresh always lands at top
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (!location.hash) window.scrollTo(0, 0);
+    window.addEventListener('load', () => { if (!location.hash) window.scrollTo(0, 0); });
+  </script>
+  <script>
     // WebGL nebula background — shared with index.html
     (function() {
       const canvas = document.getElementById('stars-canvas');

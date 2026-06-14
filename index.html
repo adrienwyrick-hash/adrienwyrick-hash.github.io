@@ -985,6 +985,12 @@
 
   <script async src="https://tally.so/widgets/embed.js"></script>
   <script>
+    // Refresh always lands at top — disable browser scroll restoration unless a hash anchor is present.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (!location.hash) window.scrollTo(0, 0);
+    window.addEventListener('load', () => { if (!location.hash) window.scrollTo(0, 0); });
+  </script>
+  <script>
     // ---- WebGL nebula hero background ----
     (function() {
       const canvas = document.getElementById('stars-canvas');
