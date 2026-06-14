@@ -680,6 +680,76 @@
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
+  /* ---------- Inline privacy policy section ---------- */
+  .privacy-section {
+    padding: 80px 32px 40px;
+    max-width: 880px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .privacy-section details {
+    background: var(--surface);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .privacy-section summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: background 0.2s var(--ease);
+  }
+  .privacy-section summary::-webkit-details-marker { display: none; }
+  .privacy-section summary:hover { background: rgba(255, 255, 255, 0.02); }
+  .privacy-section summary .sum-title {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    color: var(--gold); letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .privacy-section summary .sum-title::before {
+    content: ''; width: 24px; height: 1px; background: var(--cyan);
+  }
+  .privacy-section summary .chevron {
+    width: 16px; height: 16px;
+    stroke: var(--text-dim); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: transform 0.3s var(--ease);
+  }
+  .privacy-section details[open] summary .chevron { transform: rotate(180deg); }
+  .privacy-section .policy-body {
+    padding: 0 32px 32px;
+    border-top: 1px solid var(--border);
+    margin-top: -1px;
+  }
+  .privacy-section .policy-body h3 {
+    font-family: var(--display); font-weight: 600;
+    font-size: 17px; color: var(--cyan); margin: 24px 0 8px;
+    letter-spacing: -0.005em;
+  }
+  .privacy-section .policy-body h3:first-child { margin-top: 24px; }
+  .privacy-section .policy-body p {
+    color: var(--text-muted); line-height: 1.7; font-size: 15px; margin: 0 0 12px;
+  }
+  .privacy-section .policy-body ul {
+    color: var(--text-muted); line-height: 1.7; font-size: 15px;
+    padding-left: 22px; margin: 0 0 12px;
+  }
+  .privacy-section .policy-body li { margin-bottom: 6px; }
+  .privacy-section .policy-body strong { color: var(--text); font-weight: 600; }
+  .privacy-section .policy-body a { color: var(--cyan); text-decoration: none; }
+  .privacy-section .policy-body a:hover { text-decoration: underline; }
+  .privacy-section .effective {
+    font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin: 0 0 18px;
+  }
+
   /* ---------- Back to top button ---------- */
   .back-to-top {
     position: fixed; bottom: 24px; right: 24px; z-index: 99;
@@ -994,6 +1064,63 @@
         </button>
       </div>
     </div>
+  </section>
+
+  <!-- Inline privacy policy (lives on the homepage so wsdrift.com itself satisfies the App Store privacy URL) -->
+  <section class="privacy-section" id="privacy" aria-label="Privacy Policy">
+    <details>
+      <summary>
+        <span class="sum-title">Privacy Policy</span>
+        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </summary>
+      <div class="policy-body">
+        <p class="effective">Effective date · June 6, 2026</p>
+        <p>WS Drift is an arcade game developed by Adrien Wyrick. This policy describes what data the app handles and how.</p>
+
+        <h3>Information We Collect</h3>
+        <p>WS Drift itself does not collect, transmit, sell, or share personal information. All gameplay data stays on your device unless you choose to use the optional Apple services described below.</p>
+
+        <h3>Data Stored on Your Device</h3>
+        <p>The app stores the following information locally on your device using iOS UserDefaults. None of it is sent to the developer.</p>
+        <ul>
+          <li>Best score and per-run statistics (ships destroyed, bosses defeated, obstacles cleared, etc.)</li>
+          <li>Sound, music, and haptics preferences</li>
+          <li>Selected fighter ship</li>
+          <li>Achievement progress and daily streak counter</li>
+          <li>Onboarding state</li>
+          <li>Sign in with Apple credentials, if you choose to sign in (locally cached identity tokens — see Apple Services below)</li>
+        </ul>
+
+        <h3>Apple Services</h3>
+        <p>WS Drift integrates with the following Apple services. Each is subject to Apple's own <a href="https://www.apple.com/legal/privacy/">privacy policy</a>.</p>
+        <ul>
+          <li><strong>Game Center:</strong> When you tap Game Center inside the app, your score and achievement progress are submitted to Apple's Game Center leaderboards. Sign-in is handled by your device's Apple ID. You may opt out at any time via Settings → Game Center.</li>
+          <li><strong>Sign in with Apple:</strong> Optional. If you choose to sign in, Apple shares your name and email (or a private relay email if you choose to hide it). WS Drift stores only the identifier and display name locally. You can revoke access at any time via Settings → Apple ID → Sign In with Apple.</li>
+          <li><strong>In-App Purchases:</strong> Premium fighter ships are sold through the App Store as Non-Consumable products. Apple processes the transaction; WS Drift only receives the resulting entitlement status from the StoreKit framework. No payment information is transmitted to or stored by WS Drift.</li>
+        </ul>
+
+        <h3>Third-Party Services</h3>
+        <p>WS Drift does not use analytics, advertising, tracking, or third-party SDKs.</p>
+
+        <h3>Sharing Your Score</h3>
+        <p>The Share Score button on the Game Over screen generates an image on your device and hands it to Apple's system share sheet. WS Drift does not receive information about what you share or where you share it. Any service you share through (Instagram, Messages, Twitter, etc.) handles the data per its own privacy policy.</p>
+
+        <h3>Children's Privacy</h3>
+        <p>WS Drift does not knowingly collect personal information from children. The optional Apple services above may have their own age and consent requirements — refer to Apple's privacy policy for details.</p>
+
+        <h3>Deleting Your Data</h3>
+        <p>You can clear all locally stored WS Drift data at any time via <strong>Options → Privacy → Delete My Data</strong>. This removes your best score, achievement progress, daily streak, ship selection, sign-in identity, and preferences from your device. Game Center scores and Sign in with Apple are managed by Apple — use iOS Settings to remove those separately.</p>
+
+        <h3>wsdrift.com (this website)</h3>
+        <p>This marketing website uses <a href="https://www.goatcounter.com/">GoatCounter</a> to count anonymous visits. No cookies, no personal data, no IP storage, no cross-site tracking. Opt out via Do Not Track, Global Privacy Control, or any adblocker.</p>
+
+        <h3>Changes</h3>
+        <p>If this privacy policy changes, the updated policy will be posted at this location with a revised effective date.</p>
+
+        <h3>Contact</h3>
+        <p>For questions about this privacy policy: <a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></p>
+      </div>
+    </details>
   </section>
 
   <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
