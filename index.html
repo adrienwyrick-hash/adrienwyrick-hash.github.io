@@ -5,17 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WS Drift — A wave-based arcade shooter for iOS | Wyrick Studios</title>
 
-<!-- SEO -->
 <meta name="description" content="WS Drift is a free wave-based arcade shooter for iPhone and iPad. One-handed drift control, 17 fighters, 3 modes, 112 achievements. No grind, no pay-to-win.">
 <meta name="author" content="Wyrick Studios">
-<meta name="theme-color" content="#0c1518">
+<meta name="theme-color" content="#0a0f12">
 <link rel="canonical" href="https://wsdrift.com/">
 
-<!-- Favicons -->
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="WS Drift">
 <meta property="og:title" content="WS Drift — A wave-based arcade shooter for iOS">
@@ -25,13 +22,11 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="WS Drift — A wave-based arcade shooter for iOS">
 <meta name="twitter:description" content="Drift. Aim. Survive. 17 fighters, 3 modes, procedurally generated waves. Free on the App Store.">
 <meta name="twitter:image" content="https://wsdrift.com/og-image.png">
 
-<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,548 +38,1454 @@
   "url": "https://wsdrift.com/",
   "image": "https://wsdrift.com/MenuHero.png",
   "description": "A wave-based arcade shooter for iPhone and iPad with one-handed drift control, 17 fighters, and 3 modes.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Wyrick Studios",
-    "url": "https://wsdrift.com/"
-  },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Wyrick Studios", "url": "https://wsdrift.com/" },
   "downloadUrl": "https://apps.apple.com/app/ws-drift/id6773799597"
 }
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
   :root {
-    --bg-0: #0c1518;
-    --bg-1: #14242a;
-    --surface: rgba(12, 21, 24, 0.78);
+    --bg: #0a0f12;
+    --bg-1: #11181c;
+    --surface: rgba(20, 28, 32, 0.6);
     --border: rgba(255, 255, 255, 0.08);
-    --text: #e8f5f7;
-    --text-muted: #c9d5d7;
-    --text-dim: #6e8085;
-    --accent: #00f2ff;
-    --accent-soft: rgba(0, 242, 255, 0.14);
-    --warm: #ffb84d;
-    --warm-soft: rgba(255, 184, 77, 0.14);
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --max-width: 880px;
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: #f0f5f7;
+    --text-muted: #aab9bd;
+    --text-dim: #5b6f74;
+    --cyan: #00f2ff;
+    --cyan-2: #5cf7ff;
+    --gold: #ffb84d;
+    --magenta: #ff3ee0;
+    --maxw: 1240px;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  * { box-sizing: border-box; }
-
+  *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: radial-gradient(ellipse at top, var(--bg-1) 0%, var(--bg-0) 60%);
-    color: var(--text);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-  }
-
-  /* Subtle starfield, no animation */
-  .stars {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.75), transparent),
-      radial-gradient(1px 1px at 28% 71%, rgba(155,218,223,0.6), transparent),
-      radial-gradient(1.5px 1.5px at 51% 33%, rgba(255,255,255,0.8), transparent),
-      radial-gradient(1px 1px at 67% 89%, rgba(255,255,255,0.55), transparent),
-      radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,184,77,0.55), transparent),
-      radial-gradient(1px 1px at 39% 8%, rgba(255,255,255,0.7), transparent),
-      radial-gradient(1px 1px at 94% 22%, rgba(0,242,255,0.6), transparent),
-      radial-gradient(1.5px 1.5px at 7% 60%, rgba(255,255,255,0.8), transparent),
-      radial-gradient(1px 1px at 73% 12%, rgba(255,255,255,0.45), transparent),
-      radial-gradient(1.5px 1.5px at 22% 95%, rgba(0,242,255,0.55), transparent);
-  }
-
-  .container {
-    position: relative;
-    z-index: 2;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 64px 24px 80px;
-    text-align: center;
-  }
-
-  /* Hero */
-  .icon {
-    width: 132px;
-    height: 132px;
-    border-radius: 30px;
-    box-shadow: 0 12px 60px rgba(0, 242, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.06);
-    margin-bottom: 24px;
-  }
-
-  h1 {
-    font-size: clamp(44px, 7vw, 64px);
-    letter-spacing: -1.5px;
-    margin: 0 0 8px;
-    color: var(--accent);
-    text-shadow: 0 0 32px rgba(0, 242, 255, 0.35);
-    font-weight: 700;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    color: #9bdadf;
-    margin: 0 0 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .tagline {
-    font-size: 20px;
-    color: var(--warm);
-    font-weight: 600;
-    margin: 0 0 32px;
-    font-style: italic;
-  }
-
-  /* App Store badge — Apple-style solid black, no border */
-  .download {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #000;
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 12px;
-    text-decoration: none;
-    transition: transform 0.18s ease, background 0.18s ease;
-    min-width: 200px;
-    justify-content: center;
-    font-family: inherit;
-  }
-  .download:hover { transform: translateY(-2px); background: #111; text-decoration: none; }
-  .download:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .download svg { width: 28px; height: 28px; flex-shrink: 0; }
-  .download .label { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1; }
-  .download .label small { font-size: 11px; font-weight: 400; opacity: 0.95; margin-bottom: 3px; }
-  .download .label strong { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
-
-  /* Secondary pills */
-  .pill-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 18px 0 48px; }
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.04);
+    background: var(--bg);
     color: var(--text);
-    padding: 10px 20px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.12);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    font-family: var(--body);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
   }
-  .pill:hover { transform: translateY(-1px); text-decoration: none; }
-  .pill.support-btn:hover { background: var(--accent-soft); border-color: rgba(0,242,255,0.4); }
-  .pill.privacy-btn:hover { background: var(--warm-soft); border-color: rgba(255,184,77,0.4); }
-  .pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .pill .icon-sm { width: 16px; height: 16px; }
 
-  /* Hero gameplay video */
-  .hero-video {
-    margin: 0 auto 56px;
-    max-width: 320px;
-    aspect-ratio: 9 / 19.5;
-    border-radius: 36px;
-    overflow: hidden;
+  /* ---------- Grain overlay ---------- */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+    opacity: 0.045; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- Custom cursor ---------- */
+  .cursor { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; mix-blend-mode: screen; transform: translate(-50%, -50%); }
+  .cursor::before {
+    content: ''; display: block; width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid var(--cyan); transition: transform 0.18s var(--ease), background 0.18s var(--ease);
+  }
+  .cursor.hover::before { transform: scale(1.8); background: rgba(0, 242, 255, 0.18); }
+  .cursor-glow {
+    position: fixed; top: 0; left: 0; width: 480px; height: 480px;
+    background: radial-gradient(circle at center, rgba(0,242,255,0.16), transparent 60%);
+    pointer-events: none; z-index: 1; transform: translate(-50%, -50%);
+    transition: opacity 0.4s var(--ease); opacity: 0.6;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor, .cursor-glow { display: none; }
+  }
+
+  /* ---------- Canvas starfield ---------- */
+  #stars-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    width: 100vw; height: 100vh;
+  }
+
+  /* ---------- Nav ---------- */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 15, 18, 0.5);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  nav.top.scrolled { border-color: var(--border); background: rgba(10, 15, 18, 0.85); }
+  nav.top .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+  nav.top .brand img { width: 32px; height: 32px; border-radius: 8px; box-shadow: 0 0 0 1px rgba(255,255,255,0.08); }
+  nav.top .brand-text { font-family: var(--display); font-weight: 600; font-size: 16px; letter-spacing: 0.5px; }
+  nav.top .brand-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 1.5px;
+    padding: 4px 10px; border-radius: 999px;
+    background: rgba(0, 242, 255, 0.08);
+    border: 1px solid rgba(0, 242, 255, 0.28);
+    text-transform: uppercase;
+  }
+  nav.top .brand-tag .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+    animation: pulseDot 1.6s ease-in-out infinite;
+  }
+  @keyframes pulseDot { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.18); } }
+  @media (max-width: 720px) { nav.top .brand-tag { display: none; } }
+  nav.top .links { display: flex; gap: 28px; align-items: center; }
+  nav.top .links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
+  nav.top .links a:hover { color: var(--cyan); }
+  nav.top .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 18px; border-radius: 999px;
+    background: var(--cyan); color: var(--bg);
+    font-family: var(--display); font-weight: 600; font-size: 13px;
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    box-shadow: 0 0 0 1px var(--cyan), 0 8px 24px rgba(0, 242, 255, 0.35);
+  }
+  nav.top .nav-cta svg { width: 14px; height: 14px; }
+  nav.top .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--cyan), 0 14px 32px rgba(0, 242, 255, 0.5); }
+  @media (max-width: 720px) {
+    nav.top { padding: 14px 18px; }
+    nav.top .links { display: none; }
+  }
+
+  /* ---------- Section base ---------- */
+  section { position: relative; z-index: 2; padding: 120px 32px; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; }
+  @media (max-width: 720px) { section { padding: 80px 18px; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding-top: 140px; padding-bottom: 80px;
     position: relative;
-    box-shadow:
-      0 20px 80px rgba(0, 242, 255, 0.25),
-      0 0 0 8px rgba(255,255,255,0.04),
-      0 0 0 9px rgba(255,255,255,0.08);
-    background: #000;
   }
-  .hero-video video, .hero-video img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .hero > * { position: relative; z-index: 2; }
+  .hero .chase { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .hero .ship {
+    position: absolute; top: 0; left: 0;
+    transform: translate(-200px, -200px);
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: opacity 0.4s ease;
   }
+  .hero .ship svg { display: block; }
+  .hero .ship.enemy { color: #ff3ee0; filter: drop-shadow(0 0 8px rgba(255, 62, 224, 0.7)); }
+  .hero .ship.player { color: var(--cyan); filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.85)); }
+  .hero .ship.hit { filter: drop-shadow(0 0 14px rgba(255, 255, 255, 1)) brightness(2.5); }
+  .hero .bolt {
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 16px;
+    background: linear-gradient(180deg, rgba(0,242,255,1) 0%, rgba(0,242,255,0.2) 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--cyan), 0 0 22px rgba(0, 242, 255, 0.5);
+    transform: translate(-200px, -200px);
+    will-change: transform, opacity;
+  }
+  .hero .trail {
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    transform: translate(-200px, -200px);
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+  .hero .trail.gold { background: #ff8a3e; box-shadow: 0 0 8px #ff8a3e; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; color: var(--cyan);
+    text-transform: uppercase; letter-spacing: 4px; margin: 0 0 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: ''; width: 36px; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan));
+  }
+  .eyebrow::after { background: linear-gradient(270deg, transparent, var(--cyan)); }
 
-  /* Section headings */
-  h2 {
-    font-size: 22px;
-    color: var(--warm);
-    margin: 0 0 18px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(72px, 14vw, 200px);
     font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.88;
+    margin: 0 0 28px;
+    font-variation-settings: "wght" 700;
+    color: var(--text);
   }
-  h2 .icon-sm { color: var(--warm); width: 22px; height: 22px; }
-
-  .intro {
-    line-height: 1.65;
-    color: var(--text-muted);
-    text-align: left;
-    font-size: 16px;
+  .hero h1 .ws {
+    color: var(--cyan);
+    text-shadow: 0 0 32px rgba(0, 242, 255, 0.45), 0 0 80px rgba(0, 242, 255, 0.2);
+    font-style: italic;
+    margin-right: -0.04em;
   }
-
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
-
-  /* Cards */
-  .card {
-    background: var(--surface);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    margin: 20px 0;
-    text-align: left;
+  .hero h1 .drift { color: #e8f1f3; }
+  .hero h1 .ch {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(110%) rotate(-8deg);
+    animation: heroChIn 1.1s var(--ease) forwards;
+    animation-delay: calc(var(--i, 0) * 55ms + 200ms);
+    font-variation-settings: "wght" 300;
+    will-change: transform, opacity, font-variation-settings;
   }
-  .card.pitch {
-    background: linear-gradient(135deg, rgba(0,242,255,0.07), rgba(255,184,77,0.04));
-    border-color: rgba(0,242,255,0.2);
-  }
-  .card.pitch h2 { color: var(--accent); }
-  .card.pitch h2 .icon-sm { color: var(--accent); }
-
-  /* Feature list */
-  ul { list-style: none; padding: 0; margin: 0; }
-  .features li {
-    padding: 10px 0;
-    color: var(--text-muted);
-    line-height: 1.55;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .features li .icon-sm { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-  .features strong { color: var(--text); }
-
-  /* Mode rows */
-  .mode { padding: 20px 0; border-bottom: 1px solid var(--border); }
-  .mode:last-child { border: none; padding-bottom: 0; }
-  .mode:first-child { padding-top: 4px; }
-  .mode-title {
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 700; color: #ffffff; font-size: 17px; margin-bottom: 6px;
-  }
-  .mode-title .icon-sm { color: var(--accent); width: 20px; height: 20px; }
-  .mode p { margin: 0; color: var(--text-muted); line-height: 1.55; font-size: 15px; }
-
-  /* Tier rows */
-  .tier-row {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    align-items: baseline;
-  }
-  .tier-row:last-child { border: none; }
-  .tier-name { color: var(--accent); font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
-  .tier-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
-  .tier-price { color: var(--warm); font-weight: 600; }
-
-  /* Screenshots */
-  .screenshots {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin: 16px 0 0;
-  }
-  .shot {
-    aspect-ratio: 9 / 19.5;
-    border-radius: 22px;
-    overflow: hidden;
-    background: #000;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 8px 30px rgba(0, 242, 255, 0.1);
-  }
-  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media (max-width: 640px) {
-    .screenshots { grid-template-columns: repeat(2, 1fr); }
-    .shot:nth-child(3) { display: none; }
-  }
-
-  /* Feedback CTA */
-  .feedback-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--warm));
-    color: var(--bg-0);
-    padding: 14px 32px;
-    border-radius: 999px;
-    border: none;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0,242,255,0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,242,255,0.45); }
-  .feedback-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .feedback-btn .icon-sm { width: 18px; height: 18px; }
-
-  /* Contact list */
-  .contact-list li {
-    padding: 10px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--text-muted);
-  }
-  .contact-list .icon-sm { color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; }
-
-  /* Footer */
-  .footer {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: 13px;
-    color: var(--text-dim);
-    text-align: center;
-    line-height: 1.6;
-  }
-  .footer a { color: var(--text-dim); }
-  .footer a:hover { color: var(--text-muted); }
-
-  /* Icon base */
-  .icon-sm {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    flex-shrink: 0;
-  }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+  @keyframes heroChIn {
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(0);
+      font-variation-settings: "wght" 700;
     }
   }
+  .hero .tagline, .hero .desc, .hero .ctas, .hero .eyebrow {
+    opacity: 0; animation: heroFadeUp 1s var(--ease) forwards;
+  }
+  .hero .eyebrow { animation-delay: 0ms; }
+  .hero .tagline { animation-delay: 700ms; }
+  .hero .desc { animation-delay: 850ms; }
+  .hero .ctas { animation-delay: 1000ms; }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero .tagline {
+    font-family: var(--display); font-style: italic; font-weight: 500;
+    font-size: clamp(20px, 3.2vw, 32px); color: var(--gold); margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .hero .desc {
+    font-size: 15px; color: var(--text-muted); margin: 0 auto 48px; max-width: 560px;
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: 2px;
+  }
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
-  /* Small screens */
-  @media (max-width: 520px) {
-    .container { padding: 40px 18px 60px; }
-    .card { padding: 24px; }
-    .tier-row { grid-template-columns: 1fr; gap: 4px; }
-    h1 { font-size: 44px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 999px; text-decoration: none;
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.3px; transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+    border: 1px solid transparent; cursor: none;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary {
+    background: var(--cyan); color: var(--bg);
+    box-shadow: 0 0 0 1px var(--cyan), 0 12px 40px rgba(0, 242, 255, 0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--cyan), 0 20px 50px rgba(0, 242, 255, 0.55); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.04); color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: var(--cyan); color: var(--cyan); }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* Hero scroll cue */
+  .scroll-cue {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    color: var(--text-dim); font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 3px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .scroll-cue::after {
+    content: ''; width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: cuePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes cuePulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); } }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.3); padding: 28px 0; overflow: hidden;
+    white-space: nowrap; position: relative;
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .marquee-track {
+    display: inline-flex; align-items: center; gap: 56px;
+    animation: marquee 38s linear infinite;
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(32px, 5vw, 56px); letter-spacing: -0.02em;
+  }
+  .marquee-track span { color: var(--text); }
+  .marquee-track .sep { color: var(--cyan); font-size: 0.7em; }
+  .marquee-track .alt { color: var(--text-dim); font-style: italic; font-weight: 400; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- Stat numbers ---------- */
+  .stats { padding-top: 100px; }
+  .stats .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .stat {
+    padding: 64px 32px; border-right: 1px solid var(--border);
+    text-align: left; position: relative;
+    transition: background 0.3s var(--ease);
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(0, 242, 255, 0.03); }
+  .stat .num {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(64px, 9vw, 128px); line-height: 0.9;
+    letter-spacing: -0.05em; color: var(--cyan);
+    text-shadow: 0 0 32px rgba(0, 242, 255, 0.2);
+    margin: 0;
+  }
+  .stat .label {
+    font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 3px; margin-top: 18px;
+  }
+  .stat .corner { position: absolute; top: 18px; right: 18px; font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; }
+  @media (max-width: 720px) {
+    .stats .grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .stat { padding: 36px 20px; }
+  }
+
+  /* ---------- Section header ---------- */
+  .sec-head { margin-bottom: 64px; max-width: 760px; }
+  .sec-label {
+    font-family: var(--mono); font-size: 11px; color: var(--cyan);
+    text-transform: uppercase; letter-spacing: 4px; margin: 0 0 18px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .sec-label::before { content: ''; width: 24px; height: 1px; background: var(--cyan); }
+  .sec-title {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(40px, 6vw, 76px); line-height: 0.95;
+    letter-spacing: -0.03em; margin: 0 0 20px; color: var(--text);
+  }
+  .sec-title em { color: var(--cyan); font-style: italic; }
+  .sec-sub { font-size: 17px; color: var(--text-muted); max-width: 600px; margin: 0; line-height: 1.6; }
+
+  /* ---------- Showcase (video) ---------- */
+  .showcase { padding-top: 80px; }
+  .showcase .stage {
+    position: relative; display: grid; grid-template-columns: 1fr 380px 1fr;
+    gap: 48px; align-items: center; margin-top: 40px;
+  }
+  .showcase .phone {
+    aspect-ratio: 9 / 19.5; border-radius: 42px; overflow: hidden; position: relative;
+    box-shadow:
+      0 30px 100px rgba(0, 242, 255, 0.25),
+      0 0 0 8px rgba(255,255,255,0.04),
+      0 0 0 9px rgba(255,255,255,0.1);
+    transform: perspective(1600px) rotateY(-8deg) rotateX(2deg);
+    transition: transform 0.6s var(--ease);
+    will-change: transform;
+  }
+  .showcase .phone:hover { transform: perspective(1600px) rotateY(0deg) rotateX(0deg) scale(1.02); }
+  .showcase .phone video {
+    width: 100%; height: 100%; object-fit: cover; display: block; background: #000;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  .showcase .ann { font-family: var(--mono); font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; line-height: 1.6; }
+  .showcase .ann .val { color: var(--cyan); font-size: 24px; font-family: var(--display); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: -0.01em; text-transform: none; }
+  .showcase .ann.left { text-align: right; }
+  .showcase .ann-stack { display: flex; flex-direction: column; gap: 60px; }
+  @media (max-width: 900px) {
+    .showcase .stage { grid-template-columns: 1fr; gap: 32px; }
+    .showcase .phone { max-width: 320px; margin: 0 auto; }
+    .showcase .ann.left { text-align: center; }
+    .showcase .ann.right { text-align: center; }
+  }
+
+  /* ---------- Modes (scrollytelling) ---------- */
+  .modes { padding-top: 160px; }
+  .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .modes-sticky { position: sticky; top: 120px; align-self: start; }
+  .modes-sticky h3 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(36px, 5vw, 60px); margin: 0 0 24px;
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .modes-sticky p { color: var(--text-muted); font-size: 16px; line-height: 1.7; }
+  .mode-cards { display: flex; flex-direction: column; gap: 24px; }
+  .mode-card {
+    border: 1px solid var(--border); border-radius: 24px; padding: 36px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .mode-card:hover { border-color: rgba(0, 242, 255, 0.4); transform: translateY(-4px); }
+  .mode-card .badge {
+    font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .mode-card h4 {
+    font-family: var(--display); font-size: 32px; font-weight: 700;
+    margin: 0 0 8px; letter-spacing: -0.02em;
+  }
+  .mode-card .meta {
+    font-family: var(--mono); font-size: 11px; color: var(--cyan);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .mode-card p { color: var(--text-muted); margin: 0; line-height: 1.6; font-size: 15px; }
+  .mode-card::before {
+    content: ''; position: absolute; top: -40%; right: -20%; width: 60%; height: 180%;
+    background: radial-gradient(ellipse, rgba(0, 242, 255, 0.08), transparent 60%);
+    pointer-events: none; opacity: 0; transition: opacity 0.3s var(--ease);
+  }
+  .mode-card:hover::before { opacity: 1; }
+  @media (max-width: 900px) {
+    .modes-grid { grid-template-columns: 1fr; gap: 40px; }
+    .modes-sticky { position: static; }
+  }
+
+  /* ---------- Bento features ---------- */
+  .bento {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px; gap: 20px; margin-top: 40px;
+  }
+  .b {
+    border: 1px solid var(--border); border-radius: 22px;
+    padding: 28px; background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .b:hover { border-color: rgba(0, 242, 255, 0.4); transform: translateY(-3px); }
+  .b svg.bi { width: 26px; height: 26px; stroke: var(--cyan); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .b h5 { font-family: var(--display); font-size: 20px; font-weight: 700; margin: 14px 0 8px; letter-spacing: -0.01em; }
+  .b p { color: var(--text-muted); font-size: 14px; line-height: 1.55; margin: 0; }
+  .b.span-2 { grid-column: span 2; }
+  .b.span-2-row { grid-row: span 2; }
+  .b.feature-hero {
+    grid-column: span 2; grid-row: span 2;
+    background: linear-gradient(135deg, rgba(0,242,255,0.08), rgba(255,184,77,0.04));
+    border-color: rgba(0, 242, 255, 0.25);
+  }
+  .b.feature-hero h5 { font-size: 32px; line-height: 1.05; }
+  .b.feature-hero p { font-size: 15px; }
+
+  /* Procedural wave visualizer */
+  .wave-viz {
+    position: relative;
+    width: 100%; height: 210px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,242,255,0.04)),
+      radial-gradient(ellipse at center, rgba(0,242,255,0.08), transparent 70%);
+    border: 1px solid rgba(0, 242, 255, 0.18);
+    overflow: hidden;
+  }
+  .wave-viz::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0,242,255,0.06) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(0deg, rgba(0,242,255,0.06) 1px, transparent 1px) 0 0 / 28px 28px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+    pointer-events: none;
+  }
+  .wave-viz svg { width: 100%; height: 100%; display: block; color: var(--cyan); position: relative; z-index: 1; }
+  .wave-viz .enemy {
+    transition: transform 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    filter: drop-shadow(0 0 5px rgba(0, 242, 255, 0.7));
+  }
+  .wave-viz .enemy.boss {
+    filter: drop-shadow(0 0 8px rgba(255, 62, 224, 0.85));
+    color: #ff3ee0;
+  }
+  .wave-viz .player-mini {
+    transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+    filter: drop-shadow(0 0 7px rgba(0, 242, 255, 0.9));
+    color: var(--cyan);
+  }
+  .wave-viz .player-line {
+    stroke: rgba(0, 242, 255, 0.22);
+    stroke-width: 1; stroke-dasharray: 3 4; fill: none;
+  }
+  .wave-viz .target-line {
+    stroke: rgba(255, 62, 224, 0.35);
+    stroke-width: 1; stroke-dasharray: 2 3; fill: none;
+    transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .wave-viz .bolt-mini {
+    stroke: var(--cyan); stroke-width: 1.4; stroke-linecap: round;
+    filter: drop-shadow(0 0 4px var(--cyan));
+  }
+  .wave-label {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-family: var(--mono); font-size: 9px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 2.5px;
+    padding: 5px 9px;
+    border: 1px solid rgba(0,242,255,0.4);
+    border-radius: 4px; text-transform: uppercase;
+    background: rgba(10,15,18,0.8);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .wave-label .live-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan); box-shadow: 0 0 6px var(--cyan);
+    animation: pulseDot 1.4s ease-in-out infinite;
+  }
+  .wave-seed {
+    position: absolute; bottom: 12px; right: 12px; z-index: 2;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-dim); letter-spacing: 1px;
+  }
+  .wave-seed span { color: var(--cyan); }
+  @media (max-width: 900px) {
+    .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+    .b.feature-hero { grid-column: span 2; grid-row: span 1; }
+    .b.span-2 { grid-column: span 2; }
+  }
+  @media (max-width: 540px) {
+    .bento { grid-template-columns: 1fr; }
+    .b, .b.span-2, .b.feature-hero { grid-column: span 1; }
+  }
+
+  /* ---------- Fighter tiers ---------- */
+  .fighters .tiers {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 40px;
+  }
+  .fighter {
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 28px 24px; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 100%);
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    display: flex; flex-direction: column; min-height: 320px;
+  }
+  .fighter:hover { border-color: rgba(0, 242, 255, 0.5); transform: translateY(-4px); }
+  .fighter::after {
+    content: ''; position: absolute; inset: -1px; pointer-events: none;
+    border-radius: inherit; padding: 1px;
+    background: linear-gradient(180deg, rgba(0,242,255,0.4), transparent 50%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.3s var(--ease);
+  }
+  .fighter:hover::after { opacity: 1; }
+  .fighter .ship { width: 100%; height: 100px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
+  .fighter .ship svg { width: auto; height: 100%; stroke: var(--cyan); fill: none; stroke-width: 1.5; filter: drop-shadow(0 0 16px rgba(0, 242, 255, 0.5)); transition: filter 0.3s var(--ease), transform 0.3s var(--ease); }
+  .fighter:hover .ship svg { filter: drop-shadow(0 0 28px rgba(0, 242, 255, 0.8)); transform: translateY(-4px) rotate(-3deg); }
+  .fighter .tname { font-family: var(--mono); font-size: 11px; color: var(--cyan); letter-spacing: 3px; text-transform: uppercase; }
+  .fighter .price { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--gold); margin: 6px 0 16px; letter-spacing: -0.02em; }
+  .fighter .ships-list { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-top: auto; }
+  @media (max-width: 1000px) {
+    .fighters .tiers { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 540px) {
+    .fighters .tiers { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final {
+    text-align: center; padding-top: 160px; padding-bottom: 80px;
+    position: relative;
+  }
+  .final::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 80%; max-width: 800px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  }
+  .final h2 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(56px, 9vw, 140px); letter-spacing: -0.04em;
+    line-height: 0.9; margin: 0 0 24px;
+  }
+  .final h2 em { color: var(--cyan); font-style: italic; }
+  .final p { color: var(--text-muted); margin: 0 auto 40px; max-width: 520px; font-size: 16px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--border); padding: 48px 32px; margin-top: 40px;
+    text-align: center; position: relative; z-index: 2;
+  }
+  footer .row {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center;
+  }
+  footer a { color: var(--text-muted); text-decoration: none; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; transition: color 0.2s; }
+  footer a:hover { color: var(--cyan); }
+  footer .legal { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+  footer .links-row { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 600px) { footer .row { justify-content: center; text-align: center; } }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Mobile sticky CTA ---------- */
+  .mobile-cta {
+    display: none;
+    position: fixed; left: 14px; right: 14px; bottom: 14px; z-index: 100;
+    background: var(--cyan); color: var(--bg);
+    font-family: var(--display); font-weight: 700; font-size: 15px;
+    padding: 16px 20px; border-radius: 999px;
+    text-decoration: none; text-align: center; letter-spacing: 0.4px;
+    box-shadow: 0 12px 40px rgba(0, 242, 255, 0.45), 0 0 0 1px rgba(0,242,255,0.6);
+    transform: translateY(140%);
+    transition: transform 0.5s var(--ease);
+  }
+  .mobile-cta.show { transform: translateY(0); }
+  .mobile-cta::after { content: ' →'; }
+  @media (max-width: 720px) { .mobile-cta { display: block; } }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
   }
 </style>
 </head>
 <body>
-  <!-- Lucide icon sprite (MIT) -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+  <!-- Lucide icon sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
-      <symbol id="i-gamepad" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></symbol>
-      <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
-      <symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
-      <symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7z"/><path d="M5 20h14"/></symbol>
-      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
-      <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
       <symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
       <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
       <symbol id="i-crosshair" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></symbol>
       <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
       <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
       <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></symbol>
-      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5c2 0 4.5 1.5 4.5 5"/><path d="M16.5 8a2.5 2.5 0 0 0 0-5c-2 0-4.5 1.5-4.5 5"/></symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/></symbol>
       <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
-      <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-      <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></symbol>
-      <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-      <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+      <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
     </defs>
   </svg>
 
-  <div class="stars"></div>
-
-  <div class="container">
-    <img src="MenuHero.png" alt="WS Drift app icon" class="icon">
-    <h1>WS Drift</h1>
-    <p class="subtitle">A wave-based arcade shooter</p>
-    <p class="tagline">"Drift. Aim. Survive."</p>
-
-    <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
-      <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff" aria-hidden="true">
-        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-      </svg>
-      <span class="label">
-        <small>Download on the</small>
-        <strong>App Store</strong>
-      </span>
+  <!-- NAV -->
+  <nav class="top" id="topnav">
+    <a href="#" class="brand" data-magnetic>
+      <img src="MenuHero.png" alt="">
+      <span class="brand-text">WS Drift</span>
+      <span class="brand-tag"><span class="dot"></span>v1.0 · Free</span>
     </a>
+    <div class="links">
+      <a href="#play">Play</a>
+      <a href="#modes">Modes</a>
+      <a href="#fighters">Fighters</a>
+      <a href="#features">Features</a>
+    </div>
+    <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="nav-cta" data-magnetic>
+      <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      Get the App
+    </a>
+  </nav>
 
-    <div class="pill-row">
-      <a href="/support.html" class="pill support-btn">
-        <svg class="icon-sm" aria-hidden="true"><use href="#i-buoy"/></svg>
-        <span>Support</span>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="chase" id="chase" aria-hidden="true">
+      <div class="ship enemy" id="enemyShip">
+        <svg width="22" height="26" viewBox="-11 -13 22 26"><path d="M0 -11 L7 9 L0 6 L-7 9 Z" fill="rgba(255,62,224,0.18)" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="0" cy="-3" r="1.4" fill="currentColor"/></svg>
+      </div>
+      <div class="ship player" id="playerShip">
+        <svg width="26" height="32" viewBox="-13 -16 26 32"><path d="M0 -14 L9 8 L5 11 L0 8 L-5 11 L-9 8 Z" fill="rgba(0,242,255,0.22)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><line x1="0" y1="-4" x2="0" y2="5" stroke="currentColor" stroke-width="1.2"/><circle cx="0" cy="-7" r="1.4" fill="currentColor"/></svg>
+      </div>
+    </div>
+    <p class="eyebrow">Wyrick Studios · iOS · 2026</p>
+    <h1><span class="ws">WS</span><br><span class="drift">DRIFT</span></h1>
+    <p class="tagline">"Drift. Aim. Survive."</p>
+    <p class="desc">A wave-based arcade shooter for iPhone &amp; iPad</p>
+    <div class="ctas">
+      <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="btn btn-primary" data-magnetic>
+        <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        Download Free
       </a>
-      <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md" class="pill privacy-btn">
-        <svg class="icon-sm" aria-hidden="true"><use href="#i-lock"/></svg>
-        <span>Privacy Policy</span>
+      <a href="#play" class="btn btn-ghost" data-magnetic>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        Watch Gameplay
       </a>
     </div>
+    <div class="scroll-cue">scroll</div>
+  </section>
 
-    <!-- Gameplay video. Drop a silent MP4 at /gameplay.mp4 (portrait, 8–12s loop). -->
-    <div class="hero-video" aria-label="WS Drift gameplay preview">
-      <video autoplay muted loop playsinline preload="metadata" poster="MenuHero.png">
-        <source src="gameplay.mp4" type="video/mp4">
-      </video>
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>DRIFT TO AIM</span><span class="sep">✦</span>
+      <span class="alt">17 Fighters</span><span class="sep">✦</span>
+      <span>NO PAY TO WIN</span><span class="sep">✦</span>
+      <span class="alt">Procedural Waves</span><span class="sep">✦</span>
+      <span>BOSS RUSH</span><span class="sep">✦</span>
+      <span class="alt">112 Achievements</span><span class="sep">✦</span>
+      <span>DRIFT TO AIM</span><span class="sep">✦</span>
+      <span class="alt">17 Fighters</span><span class="sep">✦</span>
+      <span>NO PAY TO WIN</span><span class="sep">✦</span>
+      <span class="alt">Procedural Waves</span><span class="sep">✦</span>
+      <span>BOSS RUSH</span><span class="sep">✦</span>
+      <span class="alt">112 Achievements</span><span class="sep">✦</span>
     </div>
+  </div>
 
-    <p class="intro" style="text-align: center; font-size: 17px; color: var(--text-muted); max-width: 640px; margin: 0 auto 40px;">
-      Step into the cockpit of a neon-trail starfighter built for one-handed thumb skill.
-      <strong style="color: var(--text);">WS Drift</strong> takes the classic Galaga-style squadron rush, adds a modern drift-to-aim control scheme, and stacks it with 17 unlockable fighters across five tiers.
-    </p>
-
-    <div class="card pitch">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-sparkles"/></svg>Why WS Drift?</h2>
-      <p class="intro">Most arcade shooters land in one of two camps: too easy and forgettable, or too punishing for a quick session. <strong>WS Drift sits exactly in the middle.</strong> Pick it up for a 90-second run before bed. Lose yourself for an hour chasing your daily streak. Climb the Game Center leaderboard against friends. The skill ceiling is high, but the skill floor is just one drag of your thumb.</p>
-      <p class="intro" style="margin-top: 12px;">No grind. No energy bars. No pay-to-win. Just you, your fighter, and the next wave.</p>
-    </div>
-
-    <!-- Screenshots. Drop /screenshot-1.png, /screenshot-2.png, /screenshot-3.png (portrait gameplay stills). -->
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-target"/></svg>Screens</h2>
-      <div class="screenshots">
-        <div class="shot"><img src="screenshot-1.png" alt="WS Drift gameplay — drifting through a wave" loading="lazy"></div>
-        <div class="shot"><img src="screenshot-2.png" alt="WS Drift gameplay — boss encounter" loading="lazy"></div>
-        <div class="shot"><img src="screenshot-3.png" alt="WS Drift gameplay — fighter selection" loading="lazy"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-gamepad"/></svg>How it plays</h2>
-      <p class="intro">Drag anywhere on the screen to drift your fighter — your thumb stays where it lands, the ship reacts to your motion. Bolts fire automatically from your nose-cone, straight up. Slide sideways to line each enemy up in your lane. The ones you don't shoot down loop back for another pass.</p>
-      <p class="intro" style="margin-top: 12px;">Each round is a series of waves — squadrons that swoop, dive, and shoot back. Clear them all and the round advances. The next round throws denser formations, sharper dives, and tighter timing.</p>
-    </div>
-
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-layers"/></svg>Three modes for three moods</h2>
-      <div class="mode">
-        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>Classic</div>
-        <p>Three lives. The full WS Drift experience — escalating wave count, every fighter unlocked at level 10. Perfect for marathon runs.</p>
-      </div>
-      <div class="mode">
-        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-timer"/></svg>Time Attack</div>
-        <p>One life. Faster pacing. No second chances. The mode for proving you've actually mastered the formations.</p>
-      </div>
-      <div class="mode">
-        <div class="mode-title"><svg class="icon-sm" aria-hidden="true"><use href="#i-crown"/></svg>Boss Rush</div>
-        <p>Two lives. Every wave is all bosses. Highest possible points per kill — and the highest possible bullet count to dodge.</p>
+  <!-- STATS -->
+  <section class="stats" style="padding-bottom: 0;">
+    <div class="wrap">
+      <div class="grid">
+        <div class="stat reveal"><span class="corner">01</span><p class="num" data-count="17">17</p><div class="label">Fighters</div></div>
+        <div class="stat reveal"><span class="corner">02</span><p class="num" data-count="3">3</p><div class="label">Game Modes</div></div>
+        <div class="stat reveal"><span class="corner">03</span><p class="num" data-count="112">112</p><div class="label">Achievements</div></div>
+        <div class="stat reveal"><span class="corner">04</span><p class="num">∞</p><div class="label">Procedural Waves</div></div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>17 Fighters. 5 tiers. One favorite.</h2>
-      <p class="intro" style="margin-bottom: 16px;">Find the ship that matches how you play. Lean glass-cannon? Tank with a tighter hitbox? Power-up extender? Buy once, keep forever — every fighter is a one-time non-consumable purchase.</p>
-      <div class="tier-row">
-        <div class="tier-name">Standard <span class="tier-price">FREE</span></div>
-        <div class="tier-desc">The balanced starter. Available from your first launch.</div>
+  <!-- SHOWCASE / VIDEO -->
+  <section class="showcase" id="play">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="sec-label">In motion</p>
+        <h2 class="sec-title">See it <em>fly.</em></h2>
+        <p class="sec-sub">One thumb. Twelve seconds of footage. Real game, real waves, no edits.</p>
       </div>
-      <div class="tier-row">
-        <div class="tier-name">Light Tier <span class="tier-price">$0.99</span></div>
-        <div class="tier-desc">Striker, Phantom, Drifter, Whisper. Each tunes one stat hard — pick the one that fits your style.</div>
-      </div>
-      <div class="tier-row">
-        <div class="tier-name">Mid Tier <span class="tier-price">$1.99</span></div>
-        <div class="tier-desc">Reaver, Sentinel, Pulse, Aegis, Razor, Cipher. Two-stat sidegrades for confident pilots.</div>
-      </div>
-      <div class="tier-row">
-        <div class="tier-name">Heavy Tier <span class="tier-price">$2.99</span></div>
-        <div class="tier-desc">Vanguard, Tempest, Wraith, Hammer. Multi-stat builds — fast fire and a tighter hitbox.</div>
-      </div>
-      <div class="tier-row">
-        <div class="tier-name">Apex Tier <span class="tier-price">$4.99</span></div>
-        <div class="tier-desc">Apex (all-rounder) and Voidlord (power-up specialist). Top-of-line, no compromises.</div>
+      <div class="stage">
+        <div class="ann-stack ann left">
+          <div class="reveal"><span class="val">Drift anywhere</span>Drag from any point on screen</div>
+          <div class="reveal"><span class="val">Auto-fire bolts</span>Focus on dodging and lane control</div>
+          <div class="reveal"><span class="val">Lane-based aim</span>Slide sideways to line up shots</div>
+        </div>
+        <div class="phone reveal">
+          <video id="gameplayVideo" autoplay muted loop playsinline preload="auto" poster="screenshot-1.png" disablepictureinpicture disableremoteplayback>
+            <source src="gameplay.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="ann-stack ann right">
+          <div class="reveal"><span class="val">60fps action</span>Smooth across iPhone &amp; iPad</div>
+          <div class="reveal"><span class="val">Bosses dive</span>Every wave changes the geometry</div>
+          <div class="reveal"><span class="val">Daily streak</span>One run a day keeps it lit</div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-zap"/></svg>Features</h2>
-      <ul class="features">
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-waves"/></svg><span><strong>Procedural waves</strong> — every formation is generated from a unique level + wave seed. No two runs play out the same.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-pointer"/></svg><span><strong>One-handed drift control</strong> — drag anywhere, ship responds to motion. Thumb-friendly across iPhone and iPad.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-crosshair"/></svg><span><strong>Auto-fire bolts</strong> — focus on dodging and positioning. The shooting takes care of itself.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg><span><strong>17 fighters</strong> — five tiers from free Standard up to Apex-tier Voidlord. One-time purchases.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span><strong>3 modes</strong> — Classic, Time Attack, Boss Rush. Each pacing has its own leaderboard.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span><strong>112 achievements</strong> — score, kills, rounds, ship mastery, mode wins.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-flame"/></svg><span><strong>Daily play streak</strong> — keep the flame alive with a once-a-day visit. Reminder at 8pm if your streak is about to break.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-award"/></svg><span><strong>Game Center leaderboards</strong> — see how you stack against the world.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-gift"/></svg><span><strong>Free to play</strong> — no energy bars, no pay-to-win, no subscription. Optional Remove Ads for $2.99.</span></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Privacy first</strong> — no server, no account required. Game Center is optional.</span></li>
-      </ul>
+  <!-- MODES -->
+  <section class="modes" id="modes">
+    <div class="wrap">
+      <div class="modes-grid">
+        <div class="modes-sticky reveal">
+          <p class="sec-label">Three modes</p>
+          <h3>Pick your <em>flavor.</em></h3>
+          <p>Three pacing options, three separate leaderboards. Every fighter works in every mode. Switch whenever you want a different kind of run.</p>
+        </div>
+        <div class="mode-cards">
+          <div class="mode-card reveal">
+            <div class="badge">Mode 01 — Recommended</div>
+            <h4>Classic</h4>
+            <div class="meta">3 lives · Escalating waves · Marathon</div>
+            <p>The full WS Drift experience. Escalating wave count, every fighter unlocked at level 10. Perfect for long runs where you find your rhythm.</p>
+          </div>
+          <div class="mode-card reveal">
+            <div class="badge">Mode 02 — Hardcore</div>
+            <h4>Time Attack</h4>
+            <div class="meta">1 life · Faster pacing · No mercy</div>
+            <p>One life. Faster pacing. No second chances. This is where you find out if you've really mastered the formations or just got lucky.</p>
+          </div>
+          <div class="mode-card reveal">
+            <div class="badge">Mode 03 — Pure spectacle</div>
+            <h4>Boss Rush</h4>
+            <div class="meta">2 lives · Bosses only · Highest score</div>
+            <p>Every single wave is all bosses. Highest possible points per kill. Highest possible bullet count to dodge. You'll either flame out fast or set a record.</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="card pitch">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-rocket"/></svg>Ready to fly?</h2>
-      <p class="intro" style="margin-bottom: 24px;">WS Drift is free on the App Store. Download it now, fly the Standard fighter, and see if you can crack round 5.</p>
-      <div style="text-align: center;">
-        <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="download">
-          <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" fill="#fff" aria-hidden="true">
-            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-          </svg>
-          <span class="label">
-            <small>Download on the</small>
-            <strong>App Store</strong>
-          </span>
+  <!-- BENTO FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="sec-label">What you get</p>
+        <h2 class="sec-title">No grind. <em>No paywall.</em></h2>
+        <p class="sec-sub">Free to download. Free to play forever. Every fighter is a one-time purchase if you want one — you don't need any of them to win.</p>
+      </div>
+      <div class="bento">
+        <div class="b feature-hero reveal">
+          <div class="wave-viz" aria-hidden="true">
+            <div class="wave-label"><span class="live-dot"></span>Procedural · Live</div>
+            <div class="wave-seed">seed <span id="waveSeed">0x4f2a</span></div>
+            <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <symbol id="dart-sm" overflow="visible">
+                  <path d="M0 -5.5 L4.2 5.5 L0 3.5 L-4.2 5.5 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                </symbol>
+                <symbol id="dart-boss" overflow="visible">
+                  <path d="M0 -8 L6 8 L0 5 L-6 8 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                  <circle cx="0" cy="-1" r="1.5" fill="currentColor"/>
+                </symbol>
+                <symbol id="apex-mini" overflow="visible">
+                  <path d="M0 -8 L5 5 L3 7 L0 5 L-3 7 L-5 5 Z" fill="rgba(0,242,255,0.18)" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                  <line x1="0" y1="-3" x2="0" y2="4" stroke="currentColor" stroke-width="0.9"/>
+                </symbol>
+              </defs>
+              <!-- Player lane indicator -->
+              <line class="player-line" x1="10" y1="186" x2="270" y2="186"/>
+              <!-- Target tracking line (animates to follow boss) -->
+              <line class="target-line" id="targetLine" x1="0" y1="0" x2="0" y2="180" transform="translate(140, 0)"/>
+              <!-- Enemies -->
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy"><use href="#dart-sm"/></g>
+              <g class="enemy boss"><use href="#dart-boss"/></g>
+              <!-- Player Apex -->
+              <g class="player-mini" id="playerMini" transform="translate(140, 186)"><use href="#apex-mini"/></g>
+              <!-- Bolts layer (populated by JS) -->
+              <g id="miniBolts"></g>
+            </svg>
+          </div>
+          <div>
+            <h5>Procedurally<br>generated waves</h5>
+            <p>Every formation is built from a unique level + wave seed. No two runs are ever the same. The game gets denser, faster, and meaner as you climb.</p>
+          </div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-pointer"/></svg>
+          <div><h5>One-handed</h5><p>Drag anywhere. Thumb-friendly across iPhone and iPad.</p></div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-crosshair"/></svg>
+          <div><h5>Auto-fire</h5><p>Bolts fire from your nose. You focus on dodging and lanes.</p></div>
+        </div>
+        <div class="b span-2 reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-trophy"/></svg>
+          <div><h5>112 achievements</h5><p>Score, kill counts, rounds, ship mastery, mode wins, daily streaks — track everything that matters.</p></div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-flame"/></svg>
+          <div><h5>Daily streak</h5><p>Once a day keeps it lit. Reminder at 8pm if you're about to break it.</p></div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-award"/></svg>
+          <div><h5>Game Center</h5><p>Three separate leaderboards. Climb against your friends.</p></div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-gift"/></svg>
+          <div><h5>Free forever</h5><p>No energy. No subs. Optional Remove Ads $2.99.</p></div>
+        </div>
+        <div class="b reveal">
+          <svg class="bi" aria-hidden="true"><use href="#i-shield"/></svg>
+          <div><h5>Privacy first</h5><p>No server. No account. Game Center optional.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGHTERS -->
+  <section id="fighters">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="sec-label">17 fighters · 5 tiers</p>
+        <h2 class="sec-title">Find your <em>ship.</em></h2>
+        <p class="sec-sub">Each fighter tunes the stats differently — fire rate, hitbox size, drift speed, power-up duration. Buy once, keep forever. No subscriptions, no consumables.</p>
+      </div>
+      <div class="tiers">
+        <div class="fighter reveal">
+          <div class="ship"><svg viewBox="0 0 80 100"><path d="M40 8 L60 90 L40 78 L20 90 Z"/><path d="M40 30 L40 60" stroke-opacity="0.5"/></svg></div>
+          <div class="tname">Standard</div>
+          <div class="price">FREE</div>
+          <div class="ships-list">The balanced starter. Available from your first launch.</div>
+        </div>
+        <div class="fighter reveal">
+          <div class="ship"><svg viewBox="0 0 80 100"><path d="M40 4 L55 88 L40 82 L25 88 Z"/><path d="M35 50 L25 70 M45 50 L55 70" stroke-opacity="0.4"/></svg></div>
+          <div class="tname">Light</div>
+          <div class="price">$0.99</div>
+          <div class="ships-list">Striker · Phantom · Drifter · Whisper</div>
+        </div>
+        <div class="fighter reveal">
+          <div class="ship"><svg viewBox="0 0 80 100"><path d="M40 6 L62 78 L52 92 L40 84 L28 92 L18 78 Z"/><path d="M40 36 L40 72" stroke-opacity="0.4"/></svg></div>
+          <div class="tname">Mid</div>
+          <div class="price">$1.99</div>
+          <div class="ships-list">Reaver · Sentinel · Pulse · Aegis · Razor · Cipher</div>
+        </div>
+        <div class="fighter reveal">
+          <div class="ship"><svg viewBox="0 0 80 100"><path d="M40 4 L68 60 L60 92 L48 84 L40 90 L32 84 L20 92 L12 60 Z"/><path d="M30 40 L50 40 M40 50 L40 78" stroke-opacity="0.4"/></svg></div>
+          <div class="tname">Heavy</div>
+          <div class="price">$2.99</div>
+          <div class="ships-list">Vanguard · Tempest · Wraith · Hammer</div>
+        </div>
+        <div class="fighter reveal">
+          <div class="ship"><svg viewBox="0 0 80 100"><path d="M40 2 L72 50 L66 76 L52 88 L40 80 L28 88 L14 76 L8 50 Z"/><circle cx="40" cy="50" r="8" stroke-opacity="0.6"/></svg></div>
+          <div class="tname">Apex</div>
+          <div class="price">$4.99</div>
+          <div class="ships-list">Apex · Voidlord</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="wrap">
+      <h2 class="reveal">Ready to <em>fly?</em></h2>
+      <p class="reveal">Free on the App Store. Try the Standard fighter. See if you can crack round five.</p>
+      <div class="reveal" style="display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="btn btn-primary" data-magnetic>
+          <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          Download Free
         </a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg>Got feedback?</h2>
-      <p class="intro" style="margin-bottom: 24px;">Bug? Idea? Wave you'd like to see? Drop us a note — every message is read.</p>
-      <div style="text-align: center;">
-        <button data-tally-open="XxNMJV"
-                data-tally-layout="modal"
-                data-tally-width="600"
-                data-tally-emoji-text="📨"
-                data-tally-emoji-animation="bounce"
-                class="feedback-btn">
-          <svg class="icon-sm" aria-hidden="true" style="stroke: var(--bg-0);"><use href="#i-mail"/></svg>
+        <button data-tally-open="XxNMJV" data-tally-layout="modal" data-tally-width="600" class="btn btn-ghost" data-magnetic>
           Send Feedback
         </button>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h2><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</h2>
-      <ul class="contact-list">
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-buoy"/></svg><a href="/support.html">Support &amp; FAQ</a></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-lock"/></svg><a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy Policy</a></li>
-        <li><svg class="icon-sm" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:Info@wyrickstudios.com">Info@wyrickstudios.com</a></li>
-      </ul>
-    </div>
+  <a href="https://apps.apple.com/app/ws-drift/id6773799597" class="mobile-cta" id="mobileCta">Get WS Drift — Free</a>
 
-    <div class="footer">
-      © 2026 Wyrick Studios. WS Drift is a trademark of Wyrick Studios.<br>
-      Independent games for iOS, designed in the Pacific Northwest.
+  <footer>
+    <div class="row">
+      <div class="legal">© 2026 Wyrick Studios · WS Drift™ · Designed in the Pacific Northwest</div>
+      <div class="links-row">
+        <a href="/support.html">Support</a>
+        <a href="https://github.com/adrienwyrick-hash/WyrickStudios-legal/blob/main/privacy.md">Privacy</a>
+        <a href="mailto:Info@wyrickstudios.com">Contact</a>
+      </div>
     </div>
-  </div>
+  </footer>
 
   <script async src="https://tally.so/widgets/embed.js"></script>
+  <script>
+    // ---- WebGL nebula hero background ----
+    (function() {
+      const canvas = document.getElementById('stars-canvas');
+      if (!canvas) return;
+      const gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false });
+      if (!gl) {
+        // Fallback: solid gradient via canvas 2D
+        const ctx = canvas.getContext('2d');
+        function fb() {
+          canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+          const g = ctx.createRadialGradient(canvas.width*0.6, canvas.height*0.4, 0, canvas.width*0.6, canvas.height*0.4, canvas.width);
+          g.addColorStop(0, '#11181c'); g.addColorStop(1, '#0a0f12');
+          ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        fb(); window.addEventListener('resize', fb); return;
+      }
+
+      const VERT = 'attribute vec2 aPos; varying vec2 vUv;' +
+        'void main(){ vUv = aPos*0.5+0.5; gl_Position = vec4(aPos,0.0,1.0); }';
+
+      const FRAG =
+        'precision highp float;' +
+        'uniform float uTime;' +
+        'uniform vec2 uRes;' +
+        'uniform vec2 uMouse;' +
+        'varying vec2 vUv;' +
+        'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }' +
+        'float noise(vec2 p){' +
+          'vec2 i=floor(p), f=fract(p);' +
+          'float a=hash(i), b=hash(i+vec2(1.0,0.0)), c=hash(i+vec2(0.0,1.0)), d=hash(i+vec2(1.0,1.0));' +
+          'vec2 u=f*f*(3.0-2.0*f);' +
+          'return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);' +
+        '}' +
+        'float fbm(vec2 p){' +
+          'float v=0.0, a=0.5;' +
+          'for(int i=0;i<5;i++){ v += a*noise(p); p *= 2.03; a *= 0.5; }' +
+          'return v;' +
+        '}' +
+        'void main(){' +
+          'vec2 uv = vUv;' +
+          'vec2 p = uv*2.0 - 1.0;' +
+          'p.x *= uRes.x/uRes.y;' +
+          'vec2 m = (uMouse - 0.5) * 0.35;' +
+          'p += m * smoothstep(0.0, 1.6, length(p));' +
+          'float t = uTime * 0.045;' +
+          'vec2 q = vec2(fbm(p*0.85 + vec2(t, t*0.7)), fbm(p*0.85 + vec2(-t*0.6, t)));' +
+          'float n = fbm(p*1.25 + q*1.75);' +
+          'n = pow(n, 1.15);' +
+          'vec3 deep = vec3(0.035, 0.058, 0.073);' +
+          'vec3 cyan = vec3(0.0, 0.62, 0.78);' +
+          'vec3 gold = vec3(0.72, 0.5, 0.2);' +
+          'vec3 col = mix(deep, cyan, smoothstep(0.18, 0.85, n) * 0.5);' +
+          'col = mix(col, gold, smoothstep(0.6, 0.95, n) * 0.16);' +
+          'vec2 starUv = floor(uv * uRes * 0.5);' +
+          'float sh = hash(starUv);' +
+          'float twinkle = 0.55 + 0.45 * sin(uTime*2.2 + sh*15.0);' +
+          'float stars = step(0.9965, sh) * twinkle;' +
+          'col += vec3(stars * 0.95);' +
+          'float vd = dot(uv-0.5, uv-0.5);' +
+          'col *= 1.0 - vd * 0.95;' +
+          'col = pow(col, vec3(0.95));' +
+          'gl_FragColor = vec4(col, 1.0);' +
+        '}';
+
+      function compile(type, src){
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src); gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); return null; }
+        return s;
+      }
+      const vs = compile(gl.VERTEX_SHADER, VERT);
+      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+      if (!vs || !fs) return;
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(prog)); return; }
+      gl.useProgram(prog);
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'aPos');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const uTime = gl.getUniformLocation(prog, 'uTime');
+      const uRes = gl.getUniformLocation(prog, 'uRes');
+      const uMouse = gl.getUniformLocation(prog, 'uMouse');
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+      function resize(){
+        const w = window.innerWidth, h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w+'px'; canvas.style.height = h+'px';
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', (e) => {
+        tmx = e.clientX / window.innerWidth;
+        tmy = 1.0 - e.clientY / window.innerHeight;
+      }, { passive: true });
+      resize();
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const start = performance.now();
+      function tick(){
+        mx += (tmx - mx) * 0.045;
+        my += (tmy - my) * 0.045;
+        gl.uniform1f(uTime, (performance.now() - start) / 1000);
+        gl.uniform2f(uMouse, mx, my);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        if (!reduceMotion) requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    // ---- Split hero title into per-character spans ----
+    (function() {
+      const targets = document.querySelectorAll('.hero h1 .ws, .hero h1 .drift');
+      let i = 0;
+      targets.forEach(el => {
+        const text = el.textContent;
+        el.textContent = '';
+        for (const ch of text) {
+          const span = document.createElement('span');
+          span.className = 'ch';
+          span.textContent = ch;
+          span.style.setProperty('--i', i++);
+          el.appendChild(span);
+        }
+      });
+    })();
+
+    // ---- Custom cursor + glow ----
+    (function() {
+      const cursor = document.querySelector('.cursor');
+      const glow = document.querySelector('.cursor-glow');
+      if (!cursor) return;
+      let mx = window.innerWidth/2, my = window.innerHeight/2;
+      let cx = mx, cy = my, gx = mx, gy = my;
+      window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+      function render() {
+        cx += (mx - cx) * 0.28; cy += (my - cy) * 0.28;
+        gx += (mx - gx) * 0.08; gy += (my - gy) * 0.08;
+        cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+        glow.style.transform = `translate(${gx}px, ${gy}px) translate(-50%, -50%)`;
+        requestAnimationFrame(render);
+      }
+      render();
+      document.querySelectorAll('a, button, [data-magnetic]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    })();
+
+    // ---- Magnetic buttons ----
+    (function() {
+      const els = document.querySelectorAll('[data-magnetic]');
+      els.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width/2;
+          const y = e.clientY - r.top - r.height/2;
+          el.style.transform = `translate(${x*0.18}px, ${y*0.25}px)`;
+        });
+        el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+      });
+    })();
+
+    // ---- Scroll reveal ----
+    (function() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.18 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+
+    // ---- Number scramble → settle ----
+    (function() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          const el = en.target;
+          const target = parseInt(el.dataset.count, 10);
+          if (!target) return;
+          const scrambleMs = 650, countMs = 950;
+          const len = String(target).length;
+          const start = performance.now();
+          function step(now) {
+            const elapsed = now - start;
+            if (elapsed < scrambleMs) {
+              let s = '';
+              for (let i = 0; i < len; i++) s += Math.floor(Math.random() * 10);
+              el.textContent = s;
+              requestAnimationFrame(step);
+            } else {
+              const p = Math.min(1, (elapsed - scrambleMs) / countMs);
+              const ease = 1 - Math.pow(1 - p, 3);
+              el.textContent = Math.floor(target * ease);
+              if (p < 1) requestAnimationFrame(step); else el.textContent = target;
+            }
+          }
+          requestAnimationFrame(step);
+          io.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('[data-count]').forEach(el => io.observe(el));
+    })();
+
+    // ---- Hero chase scene: player Apex hunts an enemy through the title ----
+    (function() {
+      const chase = document.getElementById('chase');
+      const enemy = document.getElementById('enemyShip');
+      const player = document.getElementById('playerShip');
+      if (!chase || !enemy || !player) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const bolts = [];
+      const trails = [];
+      let phase = 'idle';
+      let phaseStart = performance.now() + 1600;  // wait briefly for title to land
+      let lastBoltTime = 0;
+      let lastTrailTime = 0;
+
+      const CHASE_MS = 5200;
+      const ORBIT_MS = 6200;
+      const GAP_MS = 1400;  // short gap between scenes — keeps action constant
+
+      function pathPos(t, amp, freq) {
+        // t in 0..1; returns [x, y] across hero width
+        const W = chase.clientWidth;
+        const H = chase.clientHeight;
+        const startX = W + 80;
+        const endX = -120;
+        const x = startX + (endX - startX) * t;
+        const yMid = H * 0.44;
+        const y = yMid + Math.sin(t * Math.PI * freq) * amp + Math.cos(t * Math.PI * 2.3) * 18;
+        return [x, y];
+      }
+      function enemyPos(t) { return pathPos(t, 70, 3.2); }
+      function playerPos(t) { return pathPos(Math.max(0, t - 0.07), 70, 3.2); }
+
+      // Apex victory orbit: enter right, loop CCW around the title, exit left.
+      function orbitPos(t) {
+        const W = chase.clientWidth;
+        const H = chase.clientHeight;
+        const cx = W / 2;
+        const cy = H * 0.40;
+        const rx = Math.min(W * 0.34, 380);
+        const ry = 78;
+        if (t < 0.16) {
+          const lt = t / 0.16;
+          const xIn = W + 80;
+          const xStart = cx + rx;
+          return [xIn + (xStart - xIn) * lt, cy];
+        } else if (t < 0.84) {
+          const lt = (t - 0.16) / 0.68;
+          const angle = lt * Math.PI * 2; // 0 → 2π, CCW since y down = up visually
+          return [cx + rx * Math.cos(angle), cy + ry * Math.sin(angle)];
+        } else {
+          const lt = (t - 0.84) / 0.16;
+          const xEnd = cx + rx;
+          const xOut = -100;
+          return [xEnd + (xOut - xEnd) * lt, cy];
+        }
+      }
+
+      function angleAt(t, fn) {
+        const dt = 0.005;
+        const [x1, y1] = fn(t);
+        const [x2, y2] = fn(Math.min(1, t + dt));
+        return Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
+      }
+
+      function spawnBolt(sx, sy, tx, ty) {
+        const el = document.createElement('div');
+        el.className = 'bolt';
+        chase.appendChild(el);
+        const dx = tx - sx, dy = ty - sy;
+        const dist = Math.hypot(dx, dy);
+        const overshoot = 220;
+        const ex = sx + (dx / dist) * (dist + overshoot);
+        const ey = sy + (dy / dist) * (dist + overshoot);
+        const ang = Math.atan2(dy, dx) + Math.PI / 2;
+        bolts.push({ el, start: performance.now(), dur: 600, sx, sy, ex, ey, ang });
+      }
+
+      function spawnTrail(x, y, gold) {
+        const el = document.createElement('div');
+        el.className = 'trail' + (gold ? ' gold' : '');
+        chase.appendChild(el);
+        el.style.transform = `translate(${x}px, ${y}px)`;
+        trails.push({ el, start: performance.now(), dur: 600, x, y });
+      }
+
+      function tick() {
+        const now = performance.now();
+        const elapsed = now - phaseStart;
+
+        if (phase === 'idle' && elapsed >= 0) {
+          phase = 'chasing';
+          phaseStart = now;
+          enemy.style.opacity = '1';
+          player.style.opacity = '1';
+        }
+
+        if (phase === 'chasing') {
+          const t = Math.min(1, elapsed / CHASE_MS);
+          const [ex, ey] = enemyPos(t);
+          const [px, py] = playerPos(t);
+          const ea = angleAt(t, enemyPos);
+          const pa = angleAt(t, playerPos);
+          enemy.style.transform = `translate(${ex}px, ${ey}px) rotate(${ea}rad)`;
+          player.style.transform = `translate(${px}px, ${py}px) rotate(${pa}rad)`;
+
+          if (now - lastTrailTime > 38) {
+            spawnTrail(px + (Math.random() - 0.5) * 4, py + 6, false);
+            if (Math.random() < 0.3) spawnTrail(ex + (Math.random() - 0.5) * 6, ey + 6, true);
+            lastTrailTime = now;
+          }
+          if (t > 0.12 && t < 0.92 && now - lastBoltTime > 420) {
+            spawnBolt(px, py - 6, ex + (Math.random() - 0.5) * 18, ey + (Math.random() - 0.5) * 18);
+            lastBoltTime = now;
+          }
+          if (t >= 1) {
+            phase = 'gap-to-orbit'; phaseStart = now;
+            enemy.style.opacity = '0'; player.style.opacity = '0';
+          }
+        } else if (phase === 'gap-to-orbit' && elapsed > GAP_MS) {
+          phase = 'orbiting'; phaseStart = now;
+          player.style.opacity = '1';  // Apex solo victory lap
+        } else if (phase === 'orbiting') {
+          const t = Math.min(1, elapsed / ORBIT_MS);
+          const [px, py] = orbitPos(t);
+          const pa = angleAt(t, orbitPos);
+          player.style.transform = `translate(${px}px, ${py}px) rotate(${pa}rad)`;
+          if (now - lastTrailTime > 30) {
+            spawnTrail(px + (Math.random() - 0.5) * 4, py + 5, false);
+            lastTrailTime = now;
+          }
+          if (t >= 1) {
+            phase = 'gap-to-chase'; phaseStart = now;
+            player.style.opacity = '0';
+          }
+        } else if (phase === 'gap-to-chase' && elapsed > GAP_MS) {
+          phase = 'chasing'; phaseStart = now;
+          enemy.style.opacity = '1'; player.style.opacity = '1';
+        }
+
+        // Animate bolts
+        for (let i = bolts.length - 1; i >= 0; i--) {
+          const b = bolts[i];
+          const bt = (now - b.start) / b.dur;
+          if (bt >= 1) { b.el.remove(); bolts.splice(i, 1); continue; }
+          const ease = 1 - Math.pow(1 - bt, 2);
+          const bx = b.sx + (b.ex - b.sx) * ease;
+          const by = b.sy + (b.ey - b.sy) * ease;
+          b.el.style.transform = `translate(${bx}px, ${by}px) rotate(${b.ang}rad)`;
+          b.el.style.opacity = 1 - bt * 0.4;
+        }
+
+        // Fade trail particles
+        for (let i = trails.length - 1; i >= 0; i--) {
+          const tr = trails[i];
+          const trt = (now - tr.start) / tr.dur;
+          if (trt >= 1) { tr.el.remove(); trails.splice(i, 1); continue; }
+          tr.el.style.opacity = 1 - trt;
+          tr.el.style.transform = `translate(${tr.x}px, ${tr.y + trt * 6}px) scale(${1 - trt * 0.7})`;
+        }
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    // ---- Procedural wave formation morpher (with player tracking) ----
+    (function() {
+      const enemies = document.querySelectorAll('.wave-viz .enemy');
+      const seedEl = document.getElementById('waveSeed');
+      const playerMini = document.getElementById('playerMini');
+      const targetLine = document.getElementById('targetLine');
+      const boltsLayer = document.getElementById('miniBolts');
+      if (!enemies.length || !playerMini) return;
+
+      // 12 [x, y] positions per formation in a 280x210 viewbox.
+      // Index 11 is the boss (varied x position — player tracks it).
+      const formations = [
+        // V / arrow — boss at center
+        [[140,28],[118,46],[162,46],[96,64],[184,64],[74,82],[206,82],[52,100],[228,100],[30,118],[250,118],[140,138]],
+        // Diamond — boss right of center
+        [[140,22],[110,42],[170,42],[80,64],[200,64],[52,90],[228,90],[80,116],[200,116],[110,138],[170,138],[195,95]],
+        // Sine wave — boss left
+        [[18,88],[42,104],[66,108],[90,100],[114,84],[138,64],[162,48],[186,40],[210,46],[234,60],[258,80],[75,135]],
+        // Grid squadron — boss far right
+        [[60,40],[110,40],[170,40],[220,40],[60,80],[110,80],[170,80],[220,80],[60,120],[110,120],[170,120],[215,155]],
+        // Loop / orbit — boss far left
+        [[140,30],[176,38],[206,58],[224,86],[224,118],[206,142],[176,158],[104,158],[74,142],[56,118],[56,86],[80,110]],
+        // Funnel — boss center
+        [[40,30],[80,30],[120,30],[160,30],[200,30],[240,30],[80,70],[160,70],[200,70],[120,110],[160,110],[140,148]]
+      ];
+
+      const seeds = ['0x4f2a','0x9c81','0x3e07','0x6db5','0xa14c','0x71f3','0xe928','0x2a55','0xb6c1'];
+      const PLAYER_Y = 186;
+      let idx = 0;
+      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function fireBolt(fromX, toX, toY) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('class', 'bolt-mini');
+        line.setAttribute('x1', fromX);
+        line.setAttribute('y1', PLAYER_Y - 4);
+        line.setAttribute('x2', fromX);
+        line.setAttribute('y2', PLAYER_Y - 4);
+        boltsLayer.appendChild(line);
+
+        const start = performance.now();
+        const dur = 800;
+        function step(now) {
+          const p = Math.min(1, (now - start) / dur);
+          const ease = 1 - Math.pow(1 - p, 2);
+          const y = (PLAYER_Y - 4) + (toY - (PLAYER_Y - 4)) * ease;
+          const x = fromX + (toX - fromX) * ease;
+          // Bolt as a short line ending at current position
+          const tailY = y + 12;
+          line.setAttribute('x1', x);
+          line.setAttribute('y1', Math.min(PLAYER_Y - 4, tailY));
+          line.setAttribute('x2', x);
+          line.setAttribute('y2', y);
+          line.style.opacity = 1 - p * 0.4;
+          if (p < 1) requestAnimationFrame(step);
+          else line.remove();
+        }
+        requestAnimationFrame(step);
+      }
+
+      function morph() {
+        const form = formations[idx];
+        enemies.forEach((el, i) => {
+          const [x, y] = form[i];
+          el.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        const [bossX, bossY] = form[11];
+        // Player tracks the boss horizontally
+        playerMini.setAttribute('transform', `translate(${bossX}, ${PLAYER_Y})`);
+        if (targetLine) {
+          targetLine.setAttribute('transform', `translate(${bossX}, 0)`);
+        }
+        if (seedEl) seedEl.textContent = seeds[Math.floor(Math.random() * seeds.length)];
+
+        // Fire a bolt after the player has had time to slide into position
+        if (!prefersReduce) {
+          setTimeout(() => fireBolt(bossX, bossX, bossY + 4), 900);
+        }
+
+        idx = (idx + 1) % formations.length;
+      }
+      morph();
+      if (!prefersReduce) setInterval(morph, 2600);
+    })();
+
+    // ---- Keep gameplay video playing through scroll/visibility changes ----
+    (function() {
+      const v = document.getElementById('gameplayVideo');
+      if (!v) return;
+
+      const tryPlay = () => {
+        const pr = v.play();
+        if (pr && typeof pr.catch === 'function') pr.catch(() => {});
+      };
+
+      // Initial nudge — autoplay attribute can be blocked until user interaction.
+      tryPlay();
+      v.addEventListener('canplay', tryPlay, { once: true });
+      v.addEventListener('loadeddata', tryPlay, { once: true });
+
+      // Resume when scrolled into view; some browsers (Safari especially)
+      // pause out-of-view videos and don't restart them automatically.
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting && v.paused) tryPlay();
+        });
+      }, { threshold: [0, 0.1, 0.5] });
+      io.observe(v);
+
+      // Recover from browser tab visibility changes.
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && v.paused) tryPlay();
+      });
+
+      // Recover if playback stalls.
+      v.addEventListener('stalled', () => setTimeout(tryPlay, 80));
+      v.addEventListener('pause', () => {
+        // If the video wasn't paused by the user (no controls exposed), restart.
+        if (!document.hidden) setTimeout(() => { if (v.paused) tryPlay(); }, 60);
+      });
+    })();
+
+    // ---- Sticky mobile CTA: show after hero leaves view ----
+    (function() {
+      const mc = document.getElementById('mobileCta');
+      const hero = document.querySelector('.hero');
+      if (!mc || !hero) return;
+      const io = new IntersectionObserver(entries => {
+        mc.classList.toggle('show', entries[0].intersectionRatio < 0.25);
+      }, { threshold: [0, 0.25, 0.5] });
+      io.observe(hero);
+    })();
+
+    // ---- Sticky nav state ----
+    (function() {
+      const nav = document.getElementById('topnav');
+      const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
