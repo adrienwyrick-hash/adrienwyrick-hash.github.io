@@ -990,13 +990,21 @@
 
   <script async src="https://tally.so/widgets/embed.js"></script>
   <script>
-    // Refresh always lands at top. Aggressive — defeats Safari scroll restoration,
-    // the CSS scroll-behavior: smooth animation, and Safari's bfcache restore.
+    // Refresh always lands at top. Uses a rAF loop for 1500ms to win the race
+    // against Safari/Chrome scroll restoration, plus stops the moment the
+    // user actually touches the page so we never fight real scrolling.
     (function() {
-      const hasMeaningfulHash = () => location.hash && location.hash !== '#';
+      const hasHash = () => location.hash && location.hash !== '#';
+      if (hasHash()) return;
+
+      let userScrolled = false;
+      const markUserScroll = () => { userScrolled = true; };
+      ['wheel', 'touchstart', 'touchmove', 'keydown', 'pointerdown', 'mousedown'].forEach(evt =>
+        window.addEventListener(evt, markUserScroll, { passive: true, once: true })
+      );
 
       function forceTop() {
-        if (hasMeaningfulHash()) return;
+        if (userScrolled || hasHash()) return;
         const html = document.documentElement;
         const prev = html.style.scrollBehavior;
         html.style.scrollBehavior = 'auto';
@@ -1008,14 +1016,28 @@
 
       forceTop();
 
-      // Keep forcing for 500ms after load — defeats browser restoration that
-      // fires after our first call.
-      const iv = setInterval(forceTop, 50);
-      setTimeout(() => clearInterval(iv), 500);
+      // rAF loop for the first 1500ms — this beats any browser scroll restore
+      // that fires after initial paint.
+      const startedAt = performance.now();
+      function loop() {
+        if (performance.now() - startedAt > 1500) return;
+        forceTop();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
 
       document.addEventListener('DOMContentLoaded', forceTop);
       window.addEventListener('load', forceTop);
-      window.addEventListener('pageshow', forceTop);
+      window.addEventListener('pageshow', (e) => {
+        // bfcache restore fires pageshow with persisted=true
+        forceTop();
+        if (e.persisted) {
+          // Repeat the loop on bfcache restore too
+          const t2 = performance.now();
+          function l2() { if (performance.now() - t2 > 800) return; forceTop(); requestAnimationFrame(l2); }
+          requestAnimationFrame(l2);
+        }
+      });
     })();
   </script>
   <script>
