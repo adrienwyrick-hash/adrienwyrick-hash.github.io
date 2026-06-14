@@ -227,11 +227,17 @@
     font-variation-settings: "wght" 700;
     color: var(--text);
   }
+  .hero h1 {
+    text-align: center;
+  }
+  .hero h1 .ws, .hero h1 .drift {
+    display: inline-block;
+    text-align: center;
+  }
   .hero h1 .ws {
     color: var(--cyan);
     text-shadow: 0 0 32px rgba(0, 242, 255, 0.45), 0 0 80px rgba(0, 242, 255, 0.2);
     font-style: italic;
-    margin-right: -0.04em;
   }
   .hero h1 .drift { color: #e8f1f3; }
   .hero h1 .ch {
@@ -277,6 +283,23 @@
   @media (max-width: 480px) {
     .hero .ctas .btn { flex: 1 1 100%; justify-content: center; }
     .hero .ctas { gap: 10px; }
+  }
+
+  /* Scroll cue — sits below the CTAs as part of the normal flow */
+  .scroll-cue {
+    margin-top: 56px;
+    display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+    color: var(--text-dim); font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 3px;
+  }
+  .scroll-cue::after {
+    content: ''; width: 1px; height: 36px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: cuePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes cuePulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+    50%      { opacity: 1; transform: scaleY(1); }
   }
 
   .btn {
@@ -720,6 +743,7 @@
         Watch Gameplay
       </a>
     </div>
+    <div class="scroll-cue" aria-hidden="true">scroll</div>
   </section>
 
   <!-- STATS -->
