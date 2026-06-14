@@ -795,7 +795,7 @@
           <div class="reveal"><span class="val">Lane-based aim</span>Slide sideways to line up shots</div>
         </div>
         <div class="phone reveal">
-          <video id="gameplayVideo" autoplay muted loop playsinline preload="auto" poster="screenshot-1.png" disablepictureinpicture disableremoteplayback>
+          <video id="gameplayVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="screenshot-1.png">
             <source src="gameplay.mp4" type="video/mp4">
           </video>
         </div>
@@ -1476,10 +1476,11 @@
       if (!v) return;
       const phone = v.parentElement;
 
-      // Build the tap-to-play overlay (shown only if autoplay is blocked)
+      // Build the tap-to-play overlay
       const overlay = document.createElement('button');
       overlay.className = 'video-play-overlay';
       overlay.setAttribute('aria-label', 'Play gameplay video');
+      overlay.type = 'button';
       overlay.innerHTML =
         '<svg viewBox="0 0 80 80" aria-hidden="true">' +
           '<circle cx="40" cy="40" r="38" fill="rgba(0,242,255,0.12)" stroke="currentColor" stroke-width="2"/>' +
@@ -1488,42 +1489,49 @@
         '<span class="label">Tap to play</span>';
       phone.appendChild(overlay);
 
-      const tryPlay = () => {
-        const pr = v.play();
-        if (pr && typeof pr.then === 'function') {
-          pr.then(() => overlay.classList.remove('show'))
-            .catch(() => overlay.classList.add('show'));
-        }
+      // Single source of truth: the overlay is shown whenever the video is paused
+      // and the user is looking at the showcase section. This is more reliable than
+      // promise resolution because iOS Safari can resolve play() but leave the
+      // video silently paused.
+      let inView = false;
+      const updateOverlay = () => {
+        const shouldShow = v.paused && inView;
+        overlay.classList.toggle('show', shouldShow);
       };
 
-      overlay.addEventListener('click', (e) => {
-        e.preventDefault();
-        tryPlay();
-      });
+      const tryPlay = () => {
+        const pr = v.play();
+        if (pr && typeof pr.catch === 'function') pr.catch(() => {});
+        // Re-check shortly — play() may resolve but video stays paused on iOS
+        setTimeout(updateOverlay, 600);
+      };
 
-      v.addEventListener('play', () => overlay.classList.remove('show'));
-      v.addEventListener('playing', () => overlay.classList.remove('show'));
+      overlay.addEventListener('click', tryPlay);
+      overlay.addEventListener('touchstart', (e) => { e.preventDefault(); tryPlay(); }, { passive: false });
 
-      // Try autoplay
-      tryPlay();
+      v.addEventListener('playing', updateOverlay);
+      v.addEventListener('pause', updateOverlay);
+      v.addEventListener('ended', updateOverlay);
       v.addEventListener('canplay', tryPlay, { once: true });
-      v.addEventListener('loadeddata', tryPlay, { once: true });
+      v.addEventListener('loadeddata', tryPlay);
 
       // Resume when scrolled into view
       const io = new IntersectionObserver(entries => {
-        entries.forEach(en => {
-          if (en.isIntersecting && v.paused) tryPlay();
-        });
-      }, { threshold: [0, 0.1, 0.5] });
-      io.observe(v);
+        inView = entries[0].isIntersecting;
+        if (inView && v.paused) tryPlay();
+        else updateOverlay();
+      }, { threshold: [0, 0.15, 0.5] });
+      io.observe(phone);
 
       // Recover from tab visibility changes
       document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && v.paused) tryPlay();
+        if (!document.hidden && inView && v.paused) tryPlay();
       });
 
-      // Recover from stalls
       v.addEventListener('stalled', () => setTimeout(tryPlay, 80));
+
+      // First attempt
+      tryPlay();
     })();
 
     // ---- Sticky mobile CTA: show after hero, hide near footer so links are tappable ----
