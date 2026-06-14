@@ -10,6 +10,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
+<script>
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -274,10 +278,13 @@
   </footer>
 
   <script>
-    // Refresh always lands at top
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    if (!location.hash) window.scrollTo(0, 0);
-    window.addEventListener('load', () => { if (!location.hash) window.scrollTo(0, 0); });
+    (function() {
+      const toTop = () => { if (!location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
+      toTop();
+      document.addEventListener('DOMContentLoaded', toTop);
+      window.addEventListener('load', toTop);
+      window.addEventListener('pageshow', toTop);
+    })();
   </script>
   <script>
     // WebGL nebula background — shared with index.html
