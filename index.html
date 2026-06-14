@@ -1468,15 +1468,30 @@
       });
     })();
 
-    // ---- Sticky mobile CTA: show after hero leaves view ----
+    // ---- Sticky mobile CTA: show after hero, hide near footer so links are tappable ----
     (function() {
       const mc = document.getElementById('mobileCta');
       const hero = document.querySelector('.hero');
+      const footer = document.querySelector('footer');
       if (!mc || !hero) return;
-      const io = new IntersectionObserver(entries => {
-        mc.classList.toggle('show', entries[0].intersectionRatio < 0.25);
+
+      let heroOut = false;
+      let nearEnd = false;
+      const update = () => mc.classList.toggle('show', heroOut && !nearEnd);
+
+      const heroIo = new IntersectionObserver(entries => {
+        heroOut = entries[0].intersectionRatio < 0.25;
+        update();
       }, { threshold: [0, 0.25, 0.5] });
-      io.observe(hero);
+      heroIo.observe(hero);
+
+      if (footer) {
+        const footerIo = new IntersectionObserver(entries => {
+          nearEnd = entries[0].isIntersecting;
+          update();
+        }, { rootMargin: '0px 0px 120px 0px' });
+        footerIo.observe(footer);
+      }
     })();
 
     // ---- Sticky nav state ----
