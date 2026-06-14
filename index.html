@@ -661,6 +661,18 @@
   footer a { color: var(--text-muted); text-decoration: none; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; transition: color 0.2s; }
   footer a:hover { color: var(--cyan); }
   footer .legal { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+  footer .visits {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text-dim); letter-spacing: 1.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 8px;
+  }
+  footer .visits .live-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan); box-shadow: 0 0 6px var(--cyan);
+    animation: pulseDot 1.6s ease-in-out infinite;
+  }
+  footer .visits #visitorCount { color: var(--cyan); font-weight: 600; }
   footer .links-row { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
   @media (max-width: 600px) { footer .row { justify-content: center; text-align: center; } }
 
@@ -993,7 +1005,13 @@
 
   <footer>
     <div class="row">
-      <div class="legal">© 2026 Wyrick Studios · WS Drift™ · Designed in the Pacific Northwest</div>
+      <div>
+        <div class="legal">© 2026 Wyrick Studios · WS Drift™ · Designed in the Pacific Northwest</div>
+        <div class="visits" aria-live="polite">
+          <span class="live-dot"></span>
+          <span id="visitorCount">—</span> visits since launch
+        </div>
+      </div>
       <div class="links-row">
         <a href="/support.html">Support</a>
         <a href="/privacy.html">Privacy</a>
@@ -1604,6 +1622,30 @@
       });
     })();
 
+
+    // ---- Live visitor count in footer (GoatCounter public endpoint) ----
+    (function() {
+      const el = document.getElementById('visitorCount');
+      if (!el) return;
+      fetch('https://wsdrift.goatcounter.com/counter/TOTAL.json')
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(d => {
+          const target = d.count || 0;
+          const dur = 1200;
+          const start = performance.now();
+          function tick(now) {
+            const p = Math.min(1, (now - start) / dur);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.floor(target * ease).toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = target.toLocaleString();
+          }
+          requestAnimationFrame(tick);
+        })
+        .catch(() => {
+          // Endpoint not public yet — leave the placeholder em-dash.
+        });
+    })();
 
     // ---- Sticky nav state ----
     (function() {
