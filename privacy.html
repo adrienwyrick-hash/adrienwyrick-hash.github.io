@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support — WS Drift | Wyrick Studios</title>
-<meta name="description" content="WS Drift support and FAQ. Account deletion, refunds, purchases, gameplay, Apple services.">
+<title>Privacy Policy — WS Drift | Wyrick Studios</title>
+<meta name="description" content="WS Drift privacy policy. What we collect (almost nothing), how Apple services work, and how to delete your data.">
 <meta name="theme-color" content="#0a0f12">
-<link rel="canonical" href="https://wsdrift.com/support.html">
+<link rel="canonical" href="https://wsdrift.com/privacy.html">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
@@ -119,23 +119,27 @@
   }
   h1 em { color: var(--cyan); font-style: italic; }
 
-  .lead {
-    font-size: 16px; color: var(--text-muted); margin: 0 0 48px; max-width: 580px;
+  .effective {
+    font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin: 0 0 48px;
   }
 
   h2 {
     font-family: var(--display); font-weight: 700;
-    font-size: 28px; color: var(--gold); margin: 0 0 18px;
+    font-size: 28px; color: var(--gold); margin: 0 0 14px;
     letter-spacing: -0.01em;
   }
   h3 {
     font-family: var(--display); font-weight: 600;
-    font-size: 18px; color: var(--cyan); margin: 24px 0 8px;
+    font-size: 18px; color: var(--cyan); margin: 28px 0 8px;
     letter-spacing: -0.005em;
   }
   h3:first-of-type { margin-top: 0; }
 
   p { line-height: 1.7; color: var(--text-muted); margin: 0 0 12px; font-size: 16px; }
+  ul { line-height: 1.7; color: var(--text-muted); padding-left: 22px; margin: 0 0 12px; }
+  li { margin-bottom: 8px; }
   a { color: var(--cyan); text-decoration: none; }
   a:hover { text-decoration: underline; }
   strong { color: var(--text); font-weight: 600; }
@@ -146,6 +150,10 @@
     border: 1px solid var(--border); border-radius: 16px;
     padding: 32px; margin: 18px 0;
   }
+  .card.intro {
+    background: linear-gradient(135deg, rgba(0,242,255,0.07), rgba(255,184,77,0.04));
+    border-color: rgba(0,242,255,0.22);
+  }
   .card.contact-card {
     background: linear-gradient(135deg, rgba(0,242,255,0.10), rgba(255,184,77,0.05));
     border-color: rgba(0,242,255,0.22); text-align: center;
@@ -153,10 +161,6 @@
   .card.contact-card .email {
     display: inline-block; font-family: var(--display);
     font-size: 22px; color: var(--cyan); font-weight: 600; margin-top: 10px;
-  }
-  .card.contact-card .reply {
-    margin-top: 14px; font-size: 13px; color: var(--text-dim);
-    font-family: var(--mono); letter-spacing: 1px; text-transform: uppercase;
   }
 
   footer {
@@ -199,66 +203,62 @@
 
   <main>
     <a href="/" class="back" data-magnetic>← Back to WS Drift</a>
-    <p class="eyebrow">Help &amp; FAQ</p>
-    <h1>Support<em>.</em></h1>
-    <p class="lead">Stuck on something? Try the FAQ below — or just email us. We reply within two business days.</p>
+    <p class="eyebrow">Wyrick Studios</p>
+    <h1>Privacy <em>Policy</em></h1>
+    <p class="effective">Effective date · June 6, 2026</p>
+
+    <div class="card intro">
+      <p>Wyrick Studios is the publisher of the games listed below. This policy describes what data each app handles and how. Each section is specific to one app — different products may collect or store different things.</p>
+    </div>
+
+    <div class="card">
+      <h2>WS Drift</h2>
+      <p>WS Drift is an arcade game developed by Adrien Wyrick.</p>
+
+      <h3>Information We Collect</h3>
+      <p>WS Drift itself does not collect, transmit, sell, or share personal information. All gameplay data stays on your device unless you choose to use the optional Apple services described below.</p>
+
+      <h3>Data Stored on Your Device</h3>
+      <p>The app stores the following information locally on your device using iOS UserDefaults. None of it is sent to the developer.</p>
+      <ul>
+        <li>Best score and per-run statistics (ships destroyed, bosses defeated, obstacles cleared, etc.)</li>
+        <li>Sound, music, and haptics preferences</li>
+        <li>Selected fighter ship</li>
+        <li>Achievement progress and daily streak counter</li>
+        <li>Onboarding state</li>
+        <li>Sign in with Apple credentials, if you choose to sign in (locally cached identity tokens — see Apple Services below)</li>
+      </ul>
+
+      <h3>Apple Services</h3>
+      <p>WS Drift integrates with the following Apple services. Each is subject to Apple's own <a href="https://www.apple.com/legal/privacy/">privacy policy</a>.</p>
+      <ul>
+        <li><strong>Game Center:</strong> When you tap Game Center inside the app, your score and achievement progress are submitted to Apple's Game Center leaderboards. Sign-in is handled by your device's Apple ID. You may opt out at any time via Settings → Game Center.</li>
+        <li><strong>Sign in with Apple:</strong> Optional. If you choose to sign in, Apple shares your name and email (or a private relay email if you choose to hide it). WS Drift stores only the identifier and display name locally. You can revoke access at any time via Settings → Apple ID → Sign In with Apple.</li>
+        <li><strong>In-App Purchases:</strong> Premium fighter ships are sold through the App Store as Non-Consumable products. Apple processes the transaction; WS Drift only receives the resulting entitlement status from the StoreKit framework. No payment information is transmitted to or stored by WS Drift.</li>
+      </ul>
+
+      <h3>Third-Party Services</h3>
+      <p>WS Drift does not use analytics, advertising, tracking, or third-party SDKs.</p>
+
+      <h3>Sharing Your Score</h3>
+      <p>The Share Score button on the Game Over screen generates an image on your device and hands it to Apple's system share sheet. WS Drift does not receive information about what you share or where you share it. Any service you share through (Instagram, Messages, Twitter, etc.) handles the data per its own privacy policy.</p>
+
+      <h3>Children's Privacy</h3>
+      <p>WS Drift does not knowingly collect personal information from children. The optional Apple services above may have their own age and consent requirements — refer to Apple's privacy policy for details.</p>
+
+      <h3>Deleting Your Data</h3>
+      <p>You can clear all locally stored WS Drift data at any time via <strong>Options → Privacy → Delete My Data</strong>. This removes your best score, achievement progress, daily streak, ship selection, sign-in identity, and preferences from your device. Game Center scores and Sign in with Apple are managed by Apple — use iOS Settings to remove those separately.</p>
+    </div>
+
+    <div class="card">
+      <h2>Changes</h2>
+      <p>If this privacy policy changes, the updated policy will be posted at this location with a revised effective date.</p>
+    </div>
 
     <div class="card contact-card">
-      <h2>Contact us</h2>
-      <p>For any questions, bug reports, refund help, or feedback:</p>
+      <h2>Contact</h2>
+      <p>For questions about this privacy policy:</p>
       <a href="mailto:Info@wyrickstudios.com" class="email">Info@wyrickstudios.com</a>
-      <div class="reply">Replies within 2 business days</div>
-    </div>
-
-    <div class="card">
-      <h2>Account &amp; Data</h2>
-
-      <h3>How do I delete my account?</h3>
-      <p>Open WS Drift → <strong>Main Menu</strong> → <strong>Options</strong> → <strong>Privacy</strong> section → tap <strong>DELETE ACCOUNT</strong>. A single tap permanently removes your sign-in identity, best score, daily streak, achievement progress, and all preferences stored on the device. This action is immediate and cannot be undone.</p>
-
-      <h3>What data does WS Drift store?</h3>
-      <p>Only what's needed to play: your best score, settings, achievement progress, and optionally your Sign in with Apple identifier. No data is sent to our servers — WS Drift doesn't have a server. Game Center scores are managed by Apple.</p>
-    </div>
-
-    <div class="card">
-      <h2>Purchases</h2>
-
-      <h3>How do I restore my purchases?</h3>
-      <p>Open WS Drift → <strong>Hangar (Ship Select)</strong> → tap the <strong>Restore</strong> button at the bottom. Sign into the same Apple ID you used for the original purchase.</p>
-
-      <h3>I bought Remove Ads but I still see ads</h3>
-      <p>1. Confirm the purchase in <strong>Settings → [Your Name] → Media &amp; Purchases → Purchase History</strong>.<br>2. In WS Drift, open the Hangar and tap <strong>Restore</strong>.<br>3. Force quit and relaunch the app.<br>4. If ads still appear, email us with your Apple ID purchase receipt.</p>
-
-      <h3>How do I request a refund?</h3>
-      <p>Refunds for App Store purchases are handled by Apple. Request one at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</p>
-    </div>
-
-    <div class="card">
-      <h2>Gameplay</h2>
-
-      <h3>How do controls work?</h3>
-      <p>Drag your thumb anywhere on the screen to drift your fighter. Your bolts fire on their own — focus on positioning and dodging.</p>
-
-      <h3>What happens if I miss a wave?</h3>
-      <p>Each wave has a 15-second timeout. If you can't kill every ship, the wave still ends so your round can progress.</p>
-
-      <h3>Where do my scores save?</h3>
-      <p>Your personal best saves on the device. If you're signed into Game Center, your score also posts to the global leaderboard.</p>
-    </div>
-
-    <div class="card">
-      <h2>Apple Services</h2>
-
-      <h3>Sign in with Apple</h3>
-      <p>Sign in with Apple is optional. WS Drift uses it only to label your local profile — we don't store your data on a server. You can hide your real email by tapping "Hide My Email" during the Apple Sign In flow.</p>
-
-      <h3>Game Center</h3>
-      <p>Game Center is operated by Apple, not Wyrick Studios. Manage your Game Center profile in <strong>Settings → Game Center</strong> on your device.</p>
-    </div>
-
-    <div class="card">
-      <h2>Legal</h2>
-      <p><a href="/privacy.html">Privacy Policy</a> — what data we collect (spoiler: very little).</p>
     </div>
   </main>
 
