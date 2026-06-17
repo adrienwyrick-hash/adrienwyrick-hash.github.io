@@ -776,6 +776,18 @@
     transform: translateZ(0);
     backface-visibility: hidden;
   }
+  /* Mask the captured iOS status bar at the top of the showcase phone,
+     same approach as the hero phone mockup. Sits above the video, below
+     the play overlay. */
+  .showcase .phone::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6.5%;
+    background: linear-gradient(180deg, #000 0%, #000 82%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
   .video-play-overlay {
     position: absolute; inset: 0; z-index: 2;
     background: rgba(0, 0, 0, 0.45);
