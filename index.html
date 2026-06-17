@@ -501,8 +501,10 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 11%;
-    background: linear-gradient(180deg, #000 0%, #000 78%, rgba(0, 0, 0, 0) 100%);
+    /* Tall enough to hide iOS's captured status bar and Dynamic Island
+       but short enough to leave the game's HUD score below visible. */
+    height: 6.5%;
+    background: linear-gradient(180deg, #000 0%, #000 82%, rgba(0, 0, 0, 0) 100%);
     z-index: 2;
     pointer-events: none;
   }
