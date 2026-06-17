@@ -123,6 +123,15 @@
     width: 100vw; height: 100vh;
   }
 
+  /* ---------- Cinematic ship canvas (Canvas2D) — flies behind content as you scroll ---------- */
+  #cinematic-canvas {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    width: 100vw; height: 100vh;
+    mix-blend-mode: screen;
+    opacity: 0; transition: opacity 0.8s ease;
+  }
+  #cinematic-canvas.on { opacity: 0.95; }
+
   /* ---------- Nav ---------- */
   nav.top {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -251,7 +260,32 @@
     text-shadow: 0 0 32px rgba(0, 242, 255, 0.45), 0 0 80px rgba(0, 242, 255, 0.2);
     font-style: italic;
   }
-  .hero h1 .drift { color: #e8f1f3; }
+  .hero h1 .drift {
+    color: #e8f1f3;
+    background-image: linear-gradient(
+      100deg,
+      rgba(232, 241, 243, 0) 35%,
+      rgba(0, 242, 255, 0.85) 48%,
+      rgba(255, 255, 255, 1) 52%,
+      rgba(0, 242, 255, 0.85) 56%,
+      rgba(232, 241, 243, 0) 70%
+    );
+    background-size: 220% 100%;
+    background-position: 130% 0%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: #e8f1f3;
+    animation: holoSweep 5.2s ease-in-out 1.6s infinite;
+  }
+  @supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+    /* Browsers without background-clip:text — fall back to plain title color. */
+    .hero h1 .drift { background-image: none; -webkit-text-fill-color: currentColor; }
+  }
+  @keyframes holoSweep {
+    0%   { background-position: 130% 0%; }
+    45%  { background-position: -30% 0%; }
+    100% { background-position: -30% 0%; }
+  }
   .hero h1 .ch {
     display: inline-block;
     opacity: 0;
@@ -714,6 +748,7 @@
   <div class="cursor-glow" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
   <canvas id="stars-canvas" aria-hidden="true"></canvas>
+  <canvas id="cinematic-canvas" aria-hidden="true"></canvas>
 
   <!-- Lucide icon sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1174,15 +1209,24 @@
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const start = performance.now();
+      let nebulaRunning = false;
       function tick(){
+        nebulaRunning = true;
         mx += (tmx - mx) * 0.045;
         my += (tmy - my) * 0.045;
         gl.uniform1f(uTime, (performance.now() - start) / 1000);
         gl.uniform2f(uMouse, mx, my);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        if (!reduceMotion) requestAnimationFrame(tick);
+        if (!reduceMotion && !document.hidden) {
+          requestAnimationFrame(tick);
+        } else {
+          nebulaRunning = false;
+        }
       }
       tick();
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && !reduceMotion && !nebulaRunning) tick();
+      });
     })();
 
     // ---- Split hero title into per-character spans ----
@@ -1647,6 +1691,162 @@
       const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    // ---- Scroll-driven cinematic: a player fighter pilots through the page
+    // following scroll position, banks naturally, and leaves a glowing trail.
+    // Sits at z-index 1 (behind content, above the WebGL nebula) with
+    // mix-blend-mode: screen so the trail emits into the nebula.
+    // Gracefully no-ops on reduced motion or missing Canvas2D. ----
+    (function() {
+      if (!('requestAnimationFrame' in window) || !('matchMedia' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const canvas = document.getElementById('cinematic-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      let W = window.innerWidth, H = window.innerHeight;
+      function resize() {
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = Math.floor(W * dpr);
+        canvas.height = Math.floor(H * dpr);
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      // Track scroll position (cheap; passive listener).
+      let scrollY = window.scrollY;
+      window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+      // Ship state — smoothed target chase so motion feels organic.
+      const ship = { x: W * 0.5, y: -120, vx: 0, vy: 0, angle: 0 };
+      const trail = [];
+      const TRAIL_MAX = 90;
+
+      // Map scroll progress (0..1) to a sinuous target path across viewport.
+      // Sin/cos with offset phases give an asymmetric, never-repeating feel.
+      function targetAt(progress) {
+        const t = progress * Math.PI * 5.4;
+        const x = W * 0.5 + Math.sin(t) * W * 0.34 + Math.cos(t * 0.63) * W * 0.10;
+        const y = H * 0.5 + Math.sin(t * 0.47 + 1.2) * H * 0.22 + Math.cos(t * 0.81) * H * 0.06;
+        return [x, y];
+      }
+
+      // Run state — pauses on hidden tab to save battery / GPU.
+      let running = !document.hidden;
+      let rafId = 0;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          running = false;
+        } else if (!running) {
+          running = true;
+          rafId = requestAnimationFrame(loop);
+        }
+      });
+
+      let activated = false; // hides until past hero so we don't fight the chase scene
+
+      function loop() {
+        if (!running) return;
+        const docMax = Math.max(1, (document.documentElement.scrollHeight || document.body.scrollHeight) - H);
+        const progress = Math.max(0, Math.min(1, scrollY / docMax));
+
+        // Only become visible once you've scrolled past the hero — the existing
+        // chase scene owns that section, no need to compete.
+        const pastHero = scrollY > H * 0.85;
+        if (pastHero && !activated) {
+          activated = true;
+          canvas.classList.add('on');
+          // Snap the ship to its starting target so it doesn't whip across screen.
+          const [tx, ty] = targetAt(progress);
+          ship.x = tx; ship.y = ty;
+        } else if (!pastHero && activated) {
+          activated = false;
+          canvas.classList.remove('on');
+        }
+
+        if (activated) {
+          const [tx, ty] = targetAt(progress);
+          // Spring-damper toward target — overshoots subtly for liveliness.
+          ship.vx += (tx - ship.x) * 0.013;
+          ship.vy += (ty - ship.y) * 0.013;
+          ship.vx *= 0.90;
+          ship.vy *= 0.90;
+          ship.x += ship.vx;
+          ship.y += ship.vy;
+          const speed = Math.hypot(ship.vx, ship.vy);
+          if (speed > 0.05) {
+            ship.angle = Math.atan2(ship.vy, ship.vx);
+          }
+
+          // Trail particle (only when moving meaningfully).
+          if (speed > 0.6) {
+            trail.unshift({ x: ship.x, y: ship.y, life: 1.0, size: 3 + Math.min(2.5, speed * 0.25) });
+            if (trail.length > TRAIL_MAX) trail.pop();
+          }
+        }
+
+        // Age trail + cull.
+        for (let i = trail.length - 1; i >= 0; i--) {
+          trail[i].life -= 0.020;
+          if (trail[i].life <= 0) trail.splice(i, 1);
+        }
+
+        ctx.clearRect(0, 0, W, H);
+
+        if (activated) {
+          // Trail: glow halos, rendered back-to-front.
+          for (let i = trail.length - 1; i >= 0; i--) {
+            const p = trail[i];
+            const r = p.size * p.life;
+            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 4);
+            g.addColorStop(0, 'rgba(0, 242, 255, ' + (0.35 * p.life).toFixed(3) + ')');
+            g.addColorStop(1, 'rgba(0, 242, 255, 0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, r * 4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Ship silhouette — Apex-style pentagon with V-tail, matches the
+          // game's TieredFighterShape.
+          ctx.save();
+          ctx.translate(ship.x, ship.y);
+          ctx.rotate(ship.angle + Math.PI / 2);
+          ctx.beginPath();
+          ctx.moveTo(0, -16);
+          ctx.lineTo(11, 4);
+          ctx.lineTo(8, 13);
+          ctx.lineTo(2, 9);
+          ctx.lineTo(0, 13);
+          ctx.lineTo(-2, 9);
+          ctx.lineTo(-8, 13);
+          ctx.lineTo(-11, 4);
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(0, 242, 255, 0.22)';
+          ctx.strokeStyle = 'rgba(0, 242, 255, 0.95)';
+          ctx.lineWidth = 1.5;
+          ctx.shadowColor = 'rgba(0, 242, 255, 0.65)';
+          ctx.shadowBlur = 14;
+          ctx.fill();
+          ctx.stroke();
+          // Cockpit ring
+          ctx.beginPath();
+          ctx.arc(0, -2, 2.4, 0, Math.PI * 2);
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        rafId = requestAnimationFrame(loop);
+      }
+      rafId = requestAnimationFrame(loop);
     })();
   </script>
 </body>
