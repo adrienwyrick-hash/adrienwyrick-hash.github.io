@@ -2320,5 +2320,14 @@
       rafId = requestAnimationFrame(loop);
     })();
   </script>
+  <script>
+  (function(){
+    var U="https://ieodptfaqcuqsqiaucry.supabase.co/rest/v1/wsdrift_events";
+    var K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imllb2RwdGZhcWN1cXNxaWF1Y3J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0ODMwNTYsImV4cCI6MjA5NzA1OTA1Nn0.RIWxILpCqFV2G26_Sn1RpcbEy1v4TLMmIkNyYXshJlU";
+    function ping(t,s){try{fetch(U,{method:"POST",keepalive:true,headers:{"Content-Type":"application/json","apikey":K,"Authorization":"Bearer "+K,"Prefer":"return=minimal"},body:JSON.stringify({type:t,store:s||null,path:location.pathname,ref:document.referrer||null})});}catch(e){}}
+    ping("pageview");
+    document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.href||"";if(/apps\.apple\.com|itunes\.apple\.com/i.test(h))ping("store_click","apple");else if(/play\.google\.com/i.test(h))ping("store_click","google");},true);
+  })();
+  </script>
 </body>
 </html>
