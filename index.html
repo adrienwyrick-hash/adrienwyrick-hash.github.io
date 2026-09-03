@@ -3,6 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Content Security Policy. Scoped to the exact third parties this page uses:
+     GoatCounter (gc.zgo.at + wsdrift.goatcounter.com), Tally (feedback modal),
+     Google Fonts, and the Supabase events endpoint. Anything else — an injected
+     <script src> pointing at an attacker's domain, a rogue iframe, a form
+     retargeted to another host — is blocked by the browser.
+     Note: 'unsafe-inline' is required because this page's CSS and JS are inline.
+     Note: frame-ancestors / X-Frame-Options cannot be set from a meta tag and
+     GitHub Pages cannot send custom headers, so anti-clickjacking is handled by
+     the frame-buster script below. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://gc.zgo.at https://tally.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://wsdrift.goatcounter.com; media-src 'self'; connect-src 'self' https://wsdrift.goatcounter.com https://ieodptfaqcuqsqiaucry.supabase.co; frame-src https://tally.so; form-action 'self' https://tally.so; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Anti-clickjacking. X-Frame-Options and CSP frame-ancestors are HTTP-header
+     only, and GitHub Pages cannot send custom headers, so if this document is
+     framed by another origin we navigate the top frame back to us; if that is
+     blocked cross-origin, we hide the document instead. -->
+<script>
+  (function(){
+    if (window.top === window.self) return;
+    try { window.top.location = window.self.location; }
+    catch (e) { document.documentElement.style.display = 'none'; }
+  })();
+</script>
+
+
 <title>WS Drift — A wave-based arcade shooter for iOS | Wyrick Studios</title>
 
 <meta name="description" content="WS Drift is a free wave-based arcade shooter for iPhone and iPad. One-handed drift control, 17 fighters, Classic & Endless modes, 99 achievements. No grind, no pay-to-win.">
@@ -16,7 +41,7 @@
 </script>
 
 <!-- GoatCounter analytics (privacy-friendly, no cookies, no PII) -->
-<script data-goatcounter="https://wsdrift.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://wsdrift.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

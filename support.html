@@ -3,6 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Content Security Policy — tighter than the homepage: this page has no
+     Tally modal and no events beacon, so those origins are not allowed here. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://wsdrift.goatcounter.com; media-src 'self'; connect-src 'self' https://wsdrift.goatcounter.com; frame-src 'none'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- Anti-clickjacking. X-Frame-Options and CSP frame-ancestors are HTTP-header
+     only, and GitHub Pages cannot send custom headers, so if this document is
+     framed by another origin we navigate the top frame back to us; if that is
+     blocked cross-origin, we hide the document instead. -->
+<script>
+  (function(){
+    if (window.top === window.self) return;
+    try { window.top.location = window.self.location; }
+    catch (e) { document.documentElement.style.display = 'none'; }
+  })();
+</script>
+
+
 <title>Support — WS Drift | Wyrick Studios</title>
 <meta name="description" content="WS Drift support and FAQ. Account deletion, refunds, purchases, gameplay, Apple services.">
 <meta name="theme-color" content="#0a0f12">
@@ -15,7 +33,7 @@
 </script>
 
 <!-- GoatCounter analytics -->
-<script data-goatcounter="https://wsdrift.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://wsdrift.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
